@@ -21,7 +21,7 @@ public class AdvogadoDAO {
 	    String url = "jdbc:mysql://localhost:3306/escritorio";
 	    con = DriverManager.getConnection(url, "escritorio-user", "ejEvkoid3");
 	    
-	    
+	    con.setAutoCommit(false);
 	    stmt = con.createStatement();
 	
 	  }  catch(java.lang.ClassNotFoundException e) {
@@ -39,6 +39,7 @@ public class AdvogadoDAO {
 	    try {  	  
 	     	String query = "SELECT * FROM advogado INNER JOIN funcionario ON advogado.idfuncionario = funcionario.id Order by idadvogado";
 	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(idadvogado)FROM advogado");
+	       	con.commit();
 	       	if (rs.next()) totalAdvogados = rs.getInt(1);
 	     	rs = stmt.executeQuery(query);
 	       	Advogado[] p = new Advogado[totalAdvogados];
@@ -81,34 +82,37 @@ public class AdvogadoDAO {
 	//consulta advogado por login
 	public Advogado consultaPorLogin (String login)
 	{
-		Advogado p = null;
+		Advogado a = null;
 	    try {  	  
 	     	String query = "SELECT * FROM advogado AS a INNER JOIN funcionario AS f ON a.idfuncionario = f.id WHERE login = '" + login + "'";
-	     	System.out.println(query);
 	       	ResultSet rs = stmt.executeQuery(query);
+	       	con.commit();
+	       	
 	       	if (rs.next()) 
 	   	    {
-	   	      p = new Advogado();	
-	          p.setId(rs.getInt("idadvogado"));     // Pega o primeiro campo do tipo Int
-	          p.setNome(rs.getString("Nome"));// Pega o segundo campo do tipo String
-	          p.setMatricula(rs.getString("Matricula"));          
-	          p.setSenha(rs.getString("senha"));
-	          p.setLogin(login);
+	   	      a = new Advogado();	
+	          a.setId(rs.getInt("idfuncionario"));     
+	          a.setNome(rs.getString("Nome"));
+	          a.setMatricula(rs.getString("Matricula"));          
+	          a.setLogin(login);
+	          a.setSenha(rs.getString("senha"));
+	          a.setOab(rs.getString("oab"));
 	        }
-	        return p;
+	        return a;
 	      }  catch (SQLException e) {
 	        System.err.print("Erro no SQL: " + e.getMessage());
 	      }
-	   return p;   
+	   return a;   
 	}
 
 	public int excluir (Advogado p)
 	{
 		int resultado = -1;
-		try {  	  
-	     	String sql = "DELETE FROM Advogado WHERE Id = ";
+		try {
+	     	String sql = "DELETE FROM funcionario WHERE id = ";
 	     	sql = sql + p.getId();
-	       	resultado = stmt.executeUpdate(sql);      
+	       	resultado = stmt.executeUpdate(sql);    
+	       	con.commit();
 	      }  catch (SQLException e) {
 	        System.err.print("Erro no SQL: " + e.getMessage());
 	      }
@@ -140,9 +144,10 @@ public class AdvogadoDAO {
 			// Coloca os verdadeiros valores no lugar dos ? em advogado
 			pstma.setString(1, Advogado.getOab());
 			
-			// Executa
+			// Executa e comita
 			pstmf.execute();
 			pstma.execute();
+			con.commit();
 		 } catch (SQLException e) {
 			// Retorna uma mensagem informando o erro
 			 JOptionPane.showMessageDialog(null, "Não foi possível salvar os dados!\nInformações sobre o erro:"
@@ -153,32 +158,40 @@ public class AdvogadoDAO {
 	}	
 	
 	public void atualizar (Advogado Advogado) {
-	
+		
 		// Cria um PreparedStatement para funcionario e para advogado
-		PreparedStatement pstm = null;
+		PreparedStatement pstmf = null;
+		PreparedStatement pstma = null;
 		
 		conexaoBD ();
-		 try {
-		 // Monta a string sql
-		String sql = "update Advogado set Nome = ?, Matricula = ?, Login = ?, Senha = ? where Id = ?";
-	
-		// Passa a string para o PreparedStatement
-		 pstm = con.prepareStatement(sql);
-	
-		// Coloca os verdadeiros valores no lugar dos ?
-		pstm.setString(1, Advogado.getNome());
-		pstm.setString(2, Advogado.getMatricula());
-		pstm.setString(3, Advogado.getLogin());
-		pstm.setString(4, Advogado.getSenha());
-		pstm.setInt(5, Advogado.getId());	
-		// Executa
-		 pstm.execute();
+		
+		try {
+		    // Monta a string sql
+		    String sqlf = 		"UPDATE funcionario SET Nome = ?, Matricula = ?, Login = ?, Senha = ? where id = ?";
+			String sqla = 		"UPDATE advogado SET oab = ? WHERE idfuncionario = ?";
+			
+			// Passa a string para o PreparedStatement de funcionario e advogado
+			pstmf = con.prepareStatement(sqlf);
+			pstma = con.prepareStatement(sqla);
+			
+			// Coloca os verdadeiros valores no lugar dos ?
+			pstmf.setString(1, Advogado.getNome());
+			pstmf.setString(2, Advogado.getMatricula());
+			pstmf.setString(3, Advogado.getLogin());
+			pstmf.setString(4, Advogado.getSenha());
+			pstmf.setInt(5, Advogado.getId());
+			pstma.setString(1, Advogado.getOab());
+			pstma.setInt(2, Advogado.getId());
+			
+			// Executa e comita
+			pstmf.execute();
+			pstma.execute();
+			con.commit();
 		 } catch (SQLException e) {
-		// Retorna uma mensagem informando o erro
-		 JOptionPane.showMessageDialog(null, "Não foi possível salvar os dados!\nInformações sobre o erro:"
-		                               + e, "Atualizarr", JOptionPane.ERROR_MESSAGE);
-		 e.printStackTrace();
+			 //Retorna uma mensagem informando o erro
+			 JOptionPane.showMessageDialog(null, "Não foi possível salvar os dados!\nInformações sobre o erro:"
+			                               + e, "Atualizarr", JOptionPane.ERROR_MESSAGE);
+			 e.printStackTrace();
 		 }
 	}
-
 }
