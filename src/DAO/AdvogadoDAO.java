@@ -59,6 +59,7 @@ public class AdvogadoDAO {
 	   return p1;   
 	}
 	
+	//inutilizado...
 	public Advogado consultaPorId (int Id)
 	{
 		Advogado p = null;
@@ -105,6 +106,7 @@ public class AdvogadoDAO {
 	   return a;   
 	}
 
+	//exclui advogado recebendo o objeto advogado como parametro
 	public int excluir (Advogado p)
 	{
 		int resultado = -1;
@@ -119,6 +121,7 @@ public class AdvogadoDAO {
 	    return resultado;
 	}
 	
+	//insere no banco um advogado passando um objeto advogado como parametro
 	public void inserir(Advogado Advogado) {
 	
 		// Cria um PreparedStatement para funcionario e advogado
@@ -157,6 +160,7 @@ public class AdvogadoDAO {
 	
 	}	
 	
+	//atualiza um advogado passando um objeto advogado como parametro ja atualizado 
 	public void atualizar (Advogado Advogado) {
 		
 		// Cria um PreparedStatement para funcionario e para advogado

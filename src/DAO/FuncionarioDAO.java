@@ -21,6 +21,7 @@ public class FuncionarioDAO {
 	    String url = "jdbc:mysql://localhost:3306/escritorio";
 	    con = DriverManager.getConnection(url, "escritorio-user", "ejEvkoid3");
 	    
+	    con.setAutoCommit(false);
 	    
 	    stmt = con.createStatement();
 	
@@ -38,6 +39,7 @@ public class FuncionarioDAO {
 	    try {  	  
 	     	String query = "SELECT * FROM funcionario Order by Id";
 	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(Id)FROM funcionario");
+	       	con.commit();
 	       	if (rs.next()) totalFuncionarios = rs.getInt(1);
 	     	rs = stmt.executeQuery(query);
 	       	Funcionario[] p = new Funcionario[totalFuncionarios];
@@ -62,6 +64,7 @@ public class FuncionarioDAO {
 	    try {  	  
 	     	String query = "SELECT * FROM Funcionario WHERE Id = " + Id;
 	       	ResultSet rs = stmt.executeQuery(query);
+	       	con.commit();
 	       	if (rs.next()) 
 	   	    {
 	   	      p = new Funcionario();	
@@ -83,6 +86,7 @@ public class FuncionarioDAO {
 	     	String query = "SELECT * FROM funcionario WHERE login = '" + login + "'";
 	     	System.out.println(query);
 	       	ResultSet rs = stmt.executeQuery(query);
+	       	con.commit();
 	       	if (rs.next()) 
 	   	    {
 	   	      p = new Funcionario();	
@@ -105,7 +109,8 @@ public class FuncionarioDAO {
 		try {  	  
 	     	String sql = "DELETE FROM funcionario WHERE Id = ";
 	     	sql = sql + p.getId();
-	       	resultado = stmt.executeUpdate(sql);      
+	       	resultado = stmt.executeUpdate(sql);  
+	       	con.commit();
 	      }  catch (SQLException e) {
 	        System.err.print("Erro no SQL: " + e.getMessage());
 	      }
@@ -132,6 +137,7 @@ public class FuncionarioDAO {
 		pstm.setString(4, Funcionario.getSenha());
 		// Executa
 		 pstm.execute();
+		 con.commit();
 		 } catch (SQLException e) {
 		// Retorna uma mensagem informando o erro
 		 JOptionPane.showMessageDialog(null, "Não foi possível salvar os dados!\nInformações sobre o erro:"
@@ -162,6 +168,7 @@ public class FuncionarioDAO {
 		pstm.setInt(5, Funcionario.getId());	
 		// Executa
 		 pstm.execute();
+		 con.commit();
 		 } catch (SQLException e) {
 		// Retorna uma mensagem informando o erro
 		 JOptionPane.showMessageDialog(null, "Não foi possível salvar os dados!\nInformações sobre o erro:"
@@ -169,5 +176,4 @@ public class FuncionarioDAO {
 		 e.printStackTrace();
 		 }
 	}
-
 }

@@ -6,7 +6,7 @@ import modelo.Advogado;
 
 import java.util.Scanner;
 
-public class Advogado_teste {
+public class AdvogadoMenu {
 
 	private static boolean login(Scanner scan) {
 		
@@ -21,8 +21,12 @@ public class Advogado_teste {
 		adao.conexaoBD(); //conectando no db
 		Advogado usuario = adao.consultaPorLogin(login); //retornando usuario desejado
 		
-		if (usuario.getSenha().equals(senha)){
-			return true;
+		if (usuario != null){
+			if (usuario.getSenha().equals(senha)){
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
@@ -36,11 +40,11 @@ public class Advogado_teste {
 		Advogado[] advogados = adao.consultaTodos(); //retornando advogados da consulta
 		
 		//printando tabela de saída
-		System.out.printf("\n%-15s%-30s%-15s\n","Id","Nome","Matrícula"); //print header
+		System.out.printf("\n%-15s%-30s%-15s%-30s\n","Id","Nome","Matrícula", "Oab"); //print header
 		
 		for (int i = 0; i < advogados.length; i++) {	
-			System.out.printf("%-15s%-30s%-15s\n", advogados[i].getId(), advogados[i].getNome(),
-							  advogados[i].getMatricula());
+			System.out.printf("%-15s%-30s%-15s%-30s\n", advogados[i].getId(), advogados[i].getNome(),
+							  advogados[i].getMatricula(), advogados[i].getOab());
 		}
 	}
 	
@@ -156,7 +160,7 @@ public class Advogado_teste {
 		while(!login_tentativa){
 			
 			//validando login
-			if(login_tentativa = Advogado_teste.login(scan)) {
+			if(login_tentativa = AdvogadoMenu.login(scan)) {
 				
 				//loop principal
 				while (true) {	
@@ -174,20 +178,20 @@ public class Advogado_teste {
 					
 					//navegando de acordo com a opção
 					if (opcao == 1) {
-						Advogado_teste.mostraTodos();
+						AdvogadoMenu.mostraTodos();
 					} else if (opcao == 2) {
-						Advogado_teste.inserir(scan);
+						AdvogadoMenu.inserir(scan);
 					} else if (opcao == 3) {
-						Advogado_teste.atualizar(scan);
+						AdvogadoMenu.atualizar(scan);
 					} else if (opcao == 4) {
-						Advogado_teste.excluir(scan);
+						AdvogadoMenu.excluir(scan);
 					} else if (opcao == 5){
-						Advogado_teste.sair(scan);
+						AdvogadoMenu.sair(scan);
 					}
 				}
 				
 			} else {
-				System.out.println("Senha incorreta!");
+				System.out.println("Usuário ou Senha incorretos!");
 			}
 		}
 	}
