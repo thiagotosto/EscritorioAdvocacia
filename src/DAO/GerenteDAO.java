@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import modelo.Gerente;
+import modelo.*;
 
 public class GerenteDAO extends FuncionarioDAO {
 	
@@ -15,7 +15,7 @@ public class GerenteDAO extends FuncionarioDAO {
 		int totalGerentes = 1;
 		Gerente[] p1 = new Gerente[1];
 	    try {  	  
-	     	String query = "SELECT * FROM gerente Order by idgerente";
+	     	String query = "SELECT * FROM gerente g INNER JOIN funcionario f ON g.idfuncionario = f.id Order by idgerente";
 	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(Id)FROM gerente");
 	       	if (rs.next()) totalGerentes = rs.getInt(1);
 	     	rs = stmt.executeQuery(query);
@@ -43,6 +43,7 @@ public class GerenteDAO extends FuncionarioDAO {
 	    try {  	  
 	     	String query = "SELECT * FROM Gerente WHERE Id = " + Id;
 	       	ResultSet rs = stmt.executeQuery(query);
+	       	con.commit();
 	       	if (rs.next()) 
 	   	    {
 	   	      p = new Gerente();	
@@ -61,7 +62,7 @@ public class GerenteDAO extends FuncionarioDAO {
 	{
 		Gerente g = null;
 	    try {  	  
-	     	String query = "SELECT * FROM gerente g INNER JOIN funcionario f ON g.idfuncionario = f.id WHERE login = '" + login + "'";
+	     	String query = "SELECT * FROM gerentes g INNER JOIN funcionario f ON g.idfuncionario = f.id WHERE login = '" + login + "'";
 	        
 	       	ResultSet rs = stmt.executeQuery(query);
 	       	con.commit();
@@ -71,6 +72,7 @@ public class GerenteDAO extends FuncionarioDAO {
 	   	      g = new Gerente();	
 	          g.setId(rs.getInt("id"));     // Pega o primeiro campo do tipo Int
 	          g.setIdGerente(rs.getInt("idgerente"));// Pega o segundo campo do tipo Int
+	          g.setIdFuncionario(rs.getInt("idfuncionario"));
 	        }
 	        return g;
 	      }  catch (SQLException e) {
@@ -79,39 +81,44 @@ public class GerenteDAO extends FuncionarioDAO {
 	   return g;   
 	}
 
-	public int excluir (Gerente p)
+	public int despromove(Gerente g)
 	{
 		int resultado = -1;
 		try {  	  
-	     	String sql = "DELETE FROM Gerente WHERE Id = ";
-	     	sql = sql + p.getId();
-	       	resultado = stmt.executeUpdate(sql);      
+	     	String sql = "DELETE FROM gerentes WHERE idfuncionario = ";
+	     	sql = sql + g.getIdFuncionario();
+	       	resultado = stmt.executeUpdate(sql);
+	       	con.commit();
 	      }  catch (SQLException e) {
 	        System.err.print("Erro no SQL: " + e.getMessage());
 	      }
 	    return resultado;
 	}
 	
-	public void inserir(Gerente Gerente) {
+	public void promove(Funcionario funcionario) {
 	
 		// Cria um PreparedStatement
 		PreparedStatement pstm = null;
 		
+		
 		conexaoBD ();
 		 try {
 		 // Monta a string sql
-		String sql = "insert into Gerente (Nome,Matricula,Login, Senha) values(?,?,?,?)";
+		String sql = "insert into gerentes (idfuncionario) values(?)";
 	
+		
+		
 		// Passa a string para o PreparedStatement
-		 pstm = con.prepareStatement(sql);
+		pstm = con.prepareStatement(sql);
 	
 		// Coloca os verdadeiros valores no lugar dos ?
-		pstm.setString(1, Gerente.getNome());		
-		pstm.setString(2, Gerente.getMatricula());
-		pstm.setString(3, Gerente.getLogin());
-		pstm.setString(4, Gerente.getSenha());
+		pstm.setInt(1, funcionario.getId());		
+		
+		System.out.println(pstm);
+		
 		// Executa
 		 pstm.execute();
+		 con.commit();
 		 } catch (SQLException e) {
 		// Retorna uma mensagem informando o erro
 		 JOptionPane.showMessageDialog(null, "Não foi possível salvar os dados!\nInformações sobre o erro:"

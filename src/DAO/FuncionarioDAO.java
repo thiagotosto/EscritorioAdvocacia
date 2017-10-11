@@ -84,9 +84,9 @@ public class FuncionarioDAO {
 		Funcionario p = null;
 	    try {  	  
 	     	String query = "SELECT * FROM funcionario WHERE login = '" + login + "'";
-	     	System.out.println(query);
 	       	ResultSet rs = stmt.executeQuery(query);
 	       	con.commit();
+	       	
 	       	if (rs.next()) 
 	   	    {
 	   	      p = new Funcionario();	
