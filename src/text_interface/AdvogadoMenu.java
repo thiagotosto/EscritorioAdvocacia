@@ -13,6 +13,10 @@ import modelo.Funcionario;
 public class AdvogadoMenu {
 	
 	public static void verPerfil(Advogado perfil) {
+		
+		//pulando uma linha
+		System.out.println();
+		
 		//imprimindo nome
 		System.out.print("Nome: ");
 		System.out.println(perfil.getNome());
@@ -30,7 +34,7 @@ public class AdvogadoMenu {
 		
 		//imprimindo login
 		System.out.print("Login: ");
-		System.out.print(perfil.getMatricula());
+		System.out.print(perfil.getLogin());
 		
 		//pulando linha
 		System.out.println();
@@ -38,6 +42,54 @@ public class AdvogadoMenu {
 		//imprimindo oab
 		System.out.print("Oab: ");
 		System.out.print(perfil.getOab());
+	}
+	
+	public static void verTodos(){
+		//instanciando AdvogadoDAO e fazendo conexão com o banco
+		AdvogadoDAO adao = new AdvogadoDAO(); 
+		adao.conexaoBD();
+		Advogado[] advogados = adao.consultaTodos(); //retornando advogados da consulta
+		
+		//printando tabela de saída
+		System.out.printf("\n%-30s%-15s%-30s\n", "Nome", "Login", "Oab"); //print header
+		
+		for (int i = 0; i < advogados.length; i++) {	
+			System.out.printf("%-30s%-15s%-30s\n", advogados[i].getNome(),
+							  advogados[i].getLogin(), advogados[i].getOab());
+		}
+	}
+	
+	public static void admitirAdvogado(Scanner scan) {
+		
+		//instanciando AdvogadoDAO
+			AdvogadoDAO adao = new AdvogadoDAO();
+			adao.conexaoBD(); // conectando com o banco
+			
+			//instanciando e populando Advogado novo
+			Advogado novoa = new Advogado();
+			
+			//pedindo Nome
+			System.out.print("Nome: ");
+			novoa.setNome(scan.nextLine());
+			
+			//pedindo Matrícula
+			System.out.print("Matricula: ");
+			novoa.setMatricula(scan.nextLine());
+			
+			//pedindo Login
+			System.out.print("Login: ");
+			novoa.setLogin(scan.nextLine());
+			
+			//pedindo Senha
+			System.out.print("Senha: ");
+			novoa.setSenha(scan.nextLine());
+			
+			//pedindo Oab
+			System.out.print("Oab: ");
+			novoa.setOab(scan.nextLine());
+			
+			//persistindo no banco
+			adao.inserir(novoa);
 	}
 
 	/*

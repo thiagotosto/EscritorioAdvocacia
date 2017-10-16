@@ -19,7 +19,7 @@ public class AdvogadoDAO {
 	try {
 	    Class.forName("com.mysql.jdbc.Driver");
 	    String url = "jdbc:mysql://localhost:3306/escritorio";
-	    con = DriverManager.getConnection(url, "escritorio-user", "fak3TwokGoi");
+	    con = DriverManager.getConnection(url, "escritorio-user", "ejEvkoid3");
 	    
 	    con.setAutoCommit(false);
 	    stmt = con.createStatement();
@@ -46,9 +46,10 @@ public class AdvogadoDAO {
 	       	int i = 0;
 	   	    while (rs.next()) {
 	   	      p[i] = new Advogado();	
-	          p[i].setId(rs.getInt("idadvogado"));     // Pega o primeiro campo do tipo Int
-	          p[i].setNome(rs.getString("Nome"));// Pega o segundo campo do tipo String
-	          p[i].setMatricula(rs.getString("Matricula")); //Pega o terciro campo do tipo String
+	          p[i].setId(rs.getInt("idadvogado"));
+	          p[i].setNome(rs.getString("Nome"));
+	          p[i].setLogin(rs.getString("login"));
+	          p[i].setMatricula(rs.getString("Matricula"));
 	          p[i].setOab(rs.getString("oab"));
 	          i++;
 	        }

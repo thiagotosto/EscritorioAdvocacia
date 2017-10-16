@@ -86,6 +86,37 @@ public class MainMenu {
 		return privilegios;
 	}
 	
+	public static void admitirFuncionario(Scanner scan) {
+		//pulando linha
+		System.out.println();
+		
+		//vetor de opções de cargos
+		String[] cargos = {"Advogado"};
+		
+		//menu de cargos
+		for (int i = 0; i < cargos.length; i++) {
+			System.out.println(i+1 + ". " + cargos[i]);
+		}
+		
+		//coletando opção
+		System.out.print("-> ");
+		int opcao = Integer.parseInt(scan.nextLine());
+		
+		//executando opção
+		if (cargos[opcao - 1] == "Advogado") {
+			AdvogadoMenu.admitirAdvogado(scan);
+		}
+	}
+	
+	public static void verFuncionarios() {
+		//pulando linha
+		System.out.println();
+		
+		//listando advogados
+		System.out.println("ADVOGADOS---------------------------------------------------\n");
+		AdvogadoMenu.verTodos();
+	}
+	
 	//sair
 	private void sair(Scanner scan){
 		scan.close();
@@ -99,11 +130,14 @@ public class MainMenu {
 		//instanciando funcionario DAO
 		FuncionarioDAO fdao = new FuncionarioDAO();
 		AdvogadoDAO adao = new AdvogadoDAO();
+		//conectando no banco
+		fdao.conexaoBD();
+		adao.conexaoBD();
 		
 		//montando opções de cada perfil
 		String[] opcoes_funcionario = {"Ver perfil","Consultar agenda", "Mudar senha"};
 		String[] opcoes_advogado = {"Consultar processos", "Cadastrar processo", "Consultar Cliente"};
-		String[] opcoes_gerente = {"Promover funcionario", "Rebaixar funcionario", "Admitir funcionário",
+		String[] opcoes_gerente = {"Ver funcionários", "Promover funcionário", "Rebaixar funcionário", "Admitir funcionário",
 				"Demitir funcionário"};
 		String[] sair = {"Sair"};
 		
@@ -138,7 +172,7 @@ public class MainMenu {
 		//loop principal
 		while (true) {	
 			//cabeçalho
-			System.out.println("\nESCOLHA UMA OPÇÃO ABAIXO:\n");
+			System.out.println("\n\nESCOLHA UMA OPÇÃO ABAIXO:\n");
 			
 			//listando opções
 			for (int i = 0; i < opcoes_perfil.length; i++){
@@ -166,14 +200,16 @@ public class MainMenu {
 				System.out.println("<Cadastrar processo>");
 			} else if (opcoes_perfil[opcao - 1] == "Consultar cliente") {
 				System.out.println("<Consultar cliente>");
-			} else if (opcoes_perfil[opcao - 1] == "Promover funcionario") {
+			} else if (opcoes_perfil[opcao - 1] == "Promover funcionário") {
 				GerenteMenu.promoverGerente(scan);
-			} else if (opcoes_perfil[opcao - 1] == "Rebaixar funcionario") {
+			} else if (opcoes_perfil[opcao - 1] == "Ver funcionários") {
+				MainMenu.verFuncionarios();
+			} else if (opcoes_perfil[opcao - 1] == "Rebaixar funcionário") {
 				GerenteMenu.despromoverGerente(scan);
-			} else if (opcoes_perfil[opcao - 1] == "Admitir funcionario") {
-				System.out.println("<Admitir funcionario>");
-			} else if (opcoes_perfil[opcao - 1] == "Demitir funcionario") {
-				System.out.println("<Demitir funcinario>");
+			} else if (opcoes_perfil[opcao - 1] == "Admitir funcionário") {
+				MainMenu.admitirFuncionario(scan);
+			} else if (opcoes_perfil[opcao - 1] == "Demitir funcionário") {
+				FuncionarioMenu.demitir(scan);
 			} else if (opcoes_perfil[opcao - 1] == "Sair") {
 				this.sair(scan);
 			}

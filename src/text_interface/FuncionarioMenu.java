@@ -40,17 +40,45 @@ public class FuncionarioMenu {
 		//instanciando funciionario DAO
 		FuncionarioDAO fdao = new FuncionarioDAO();
 		
-		//coletando senha nova do usuário
-		System.out.print("Digite a nova senha: ");
-		String senha1 = scan.nextLine();
-		System.out.print("Digite a senha novamente: ");
-		String senha2 = scan.nextLine();
+		//inicializando tentativas
+		int tentativas = 0;
 		
-		//testando se senha bate
-		if (senha1.equals(senha2)) {
-			perfil.setSenha(senha1);
+		//loop de tentativas
+		while (tentativas < 3) {
 			
-			fdao.atualizar(perfil);
+			//coletando senha nova do usuário
+			System.out.print("Digite a nova senha: ");
+			String senha1 = scan.nextLine();
+			System.out.print("Digite a senha novamente: ");
+			String senha2 = scan.nextLine();
+			
+			//testando se senha bate
+			if (senha1.equals(senha2)) {
+				perfil.setSenha(senha1);
+				
+				fdao.atualizar(perfil);
+			} else {
+				System.out.println("Senhas não batem!");
+				tentativas += 1;
+			}
+		}
+	}
+	
+	public static void demitir(Scanner scan) {
+		//instanciando FuncionarioDAO e conectando no banco
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		fdao.conexaoBD();
+		
+		//coletando usuário a ser excluido
+		System.out.print("Digite o usuário do funcionario que deseja demitir: ");
+		String usuario_excluido = scan.nextLine();
+		Funcionario usuario = fdao.consultaPorLogin(usuario_excluido);
+		
+		if (usuario != null) {
+			//excluindo usuario
+			fdao.excluir(usuario);
+		} else {
+			System.out.println("Este funcionário não consta no registro");
 		}
 	}
 }
