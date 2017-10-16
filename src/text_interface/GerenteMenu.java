@@ -1,4 +1,4 @@
-package Text_interface;
+package text_interface;
 
 import java.util.Scanner;
 
@@ -11,7 +11,7 @@ import DAO.GerenteDAO;
 
 public class GerenteMenu {
 	
-	public void adicionarFuncionario(Scanner scan) {
+	public static void adicionarFuncionario(Scanner scan) {
 	
 		//instanciando FuncionarioDAO
 		FuncionarioDAO fdao = new FuncionarioDAO();
@@ -40,7 +40,7 @@ public class GerenteMenu {
 		fdao.inserir(novof);
 	}
 	
-	public void editarFuncionario(Scanner scan) {
+	public static void editarFuncionario(Scanner scan) {
 		
 		//pedindo usuário a ser atualizado
 		System.out.print("Qual usuário deseja atualizar: ");
@@ -82,7 +82,7 @@ public class GerenteMenu {
 		fdao.atualizar(usuario);
 	}
 
-	public void excluirFuncionario(Scanner scan) {
+	public static void excluirFuncionario(Scanner scan) {
 		//instanciando FuncionarioDAO e conectando no banco
 		FuncionarioDAO fdao = new FuncionarioDAO();
 		fdao.conexaoBD();
@@ -96,7 +96,7 @@ public class GerenteMenu {
 		fdao.excluir(usuario);
 	}
 
-	public void promoverGerente(Scanner scan) {
+	public static void promoverGerente(Scanner scan) {
 		//instanciando AdvogadoDAO
 		FuncionarioDAO fdao = new FuncionarioDAO();
 		GerenteDAO gdao = new GerenteDAO();
@@ -110,11 +110,15 @@ public class GerenteMenu {
 		//instanciando e populando Advogado novo
 		Funcionario novog = fdao.consultaPorLogin(login); 
 		
-		//persistindo no banco
-		gdao.promove(novog);
+		if (novog != null) {
+			//persistindo no banco
+			gdao.promove(novog);
+		} else {
+			System.out.println("Esse funcionário não consta na base de dados!");
+		}
 	}
 	
-	public void despromoverGerente(Scanner scan) {
+	public static void despromoverGerente(Scanner scan) {
 		//instanciando GerenteDAO e conectando no banco
 		GerenteDAO gdao = new GerenteDAO();
 		gdao.conexaoBD();
@@ -124,7 +128,11 @@ public class GerenteMenu {
 		String usuario_excluido = scan.nextLine();
 		Gerente usuario = gdao.consultaPorLogin(usuario_excluido);
 		
-		//excluindo usuario
-		gdao.despromove(usuario);
+		if (usuario != null) {
+			//excluindo usuario
+			gdao.despromove(usuario);
+		} else {
+			System.out.println("Esse funcionário não é gerente!");
+		}
 	}
 }

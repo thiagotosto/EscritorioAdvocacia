@@ -1,0 +1,182 @@
+package text_interface;
+
+import java.util.Scanner;
+
+import utils.Utils;
+
+//import modelo.Advogado;
+import modelo.Funcionario;
+import DAO.*;
+//import modelo.*;
+import text_interface.*;
+
+public class MainMenu {
+	
+	private Funcionario perfil;
+	
+	public MainMenu(Scanner scan) {
+		this.login(scan);
+	}
+	
+	public Funcionario getPerfil() {
+		return this.perfil;
+	}
+	
+	//login
+	public boolean login(Scanner scan) {
+		
+		//intanciando FuncionarioDAO e fazendo conexão com o banco
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		fdao.conexaoBD(); //conectando no db
+		
+		
+		//numerod e tentativas
+		int tentativas = 0;
+		
+		while (true) {	
+			//escanenando usuario e senha
+			System.out.print("Usuario: ");
+			String login = scan.nextLine();
+			System.out.print("Senha: ");
+			String senha = scan.nextLine();
+		
+			this.perfil = fdao.consultaPorLogin(login); //retornando usuario desejado
+			
+			//testando se existe esse usuário
+			if (this.perfil != null){
+				//testando se a senha é a certa
+				if (this.perfil.getSenha().equals(senha)){
+					return true;
+				} else if (tentativas == 3) {
+					System.out.println("Senha ou usuario incorretos!");
+					this.sair(scan);
+				} else {
+					System.out.println("Senha ou usuario incorretos!");
+					tentativas += 1;
+				}
+			} else {
+				this.sair(scan);
+			}
+		}
+	}
+	
+	//descobre se os privilégios que tem
+	public String[] descobrePrivilegios(String usuario){
+		
+		String[] privilegios = new String[3];
+		
+		//instanciando DAOs
+		GerenteDAO gdao = new GerenteDAO();
+		AdvogadoDAO adao = new AdvogadoDAO();
+		
+		//conectando ao banco
+		gdao.conexaoBD();
+		adao.conexaoBD();
+		
+		//teste se é gerente
+		if (gdao.consultaPorLogin(usuario) != null) {
+			privilegios[0] = "Gerente";
+		} 
+		
+		//teste se é advogado
+		if (adao.consultaPorLogin(usuario) != null) {
+			privilegios[1] = "Advogado";
+		}
+		
+		return privilegios;
+	}
+	
+	//sair
+	private void sair(Scanner scan){
+		scan.close();
+		System.exit(1);
+	}
+	
+	public void displayMainMenu(String[] privilegios, Scanner scan) {
+		
+		//PREPARAÇÃO
+		
+		//instanciando funcionario DAO
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		AdvogadoDAO adao = new AdvogadoDAO();
+		
+		//montando opções de cada perfil
+		String[] opcoes_funcionario = {"Ver perfil","Consultar agenda", "Mudar senha"};
+		String[] opcoes_advogado = {"Consultar processos", "Cadastrar processo", "Consultar Cliente"};
+		String[] opcoes_gerente = {"Promover funcionario", "Rebaixar funcionario", "Admitir funcionário",
+				"Demitir funcionário"};
+		String[] sair = {"Sair"};
+		
+		//CONSTRUÇÃO
+		
+		//opções do perfil
+		String[] opcoes_perfil;
+		
+		//adicionando opções básicas de funcionarios
+		opcoes_perfil = opcoes_funcionario;
+		
+		//adicionando opções de gerente se for gerente
+		if (privilegios[0] == "Gerente") {
+			opcoes_perfil = Utils.joinArray(opcoes_perfil, opcoes_gerente);
+		}
+		
+		//adicionando opçóes de advogado se for advogado
+		if (privilegios[1] == "Advogado") {
+			opcoes_perfil = Utils.joinArray(opcoes_perfil, opcoes_advogado);
+		}
+		
+		//adicionando a opçao sair
+		opcoes_perfil = Utils.joinArray(opcoes_perfil, sair);
+		
+		
+		//EXECUÇÃO
+		
+		//instanciando menus
+		//FuncionarioMenu fm = new FuncionarioMenu();
+		//AdvogadoMenu am = new AdvogadoMenu();
+		
+		//loop principal
+		while (true) {	
+			//cabeçalho
+			System.out.println("\nESCOLHA UMA OPÇÃO ABAIXO:\n");
+			
+			//listando opções
+			for (int i = 0; i < opcoes_perfil.length; i++){
+				System.out.println(Integer.toString(i+1) + ". " + opcoes_perfil[i]);
+			}
+			
+			//entrada de opção do usuário
+			System.out.print("-> ");
+			int opcao = Integer.parseInt(scan.nextLine());
+			
+			//navegando pela opção
+			if (opcoes_perfil[opcao - 1] == "Ver perfil") {
+				if (privilegios[1] == "Advogado") {
+					AdvogadoMenu.verPerfil(adao.consultaPorLogin(this.perfil.getLogin()));
+				} else {
+					FuncionarioMenu.verPerfil(this.perfil);
+				}
+			} else if (opcoes_perfil[opcao - 1] == "Consultar agenda") {
+				System.out.println("<Consultar agenda>");
+			} else if (opcoes_perfil[opcao - 1] == "Mudar senha") {
+				FuncionarioMenu.mudarSenha(this.perfil, scan);
+			} else if (opcoes_perfil[opcao - 1] == "Consultar processos") {
+				System.out.println("<Consultar processos>");
+			} else if (opcoes_perfil[opcao - 1] == "Cadastrar processo") {
+				System.out.println("<Cadastrar processo>");
+			} else if (opcoes_perfil[opcao - 1] == "Consultar cliente") {
+				System.out.println("<Consultar cliente>");
+			} else if (opcoes_perfil[opcao - 1] == "Promover funcionario") {
+				GerenteMenu.promoverGerente(scan);
+			} else if (opcoes_perfil[opcao - 1] == "Rebaixar funcionario") {
+				GerenteMenu.despromoverGerente(scan);
+			} else if (opcoes_perfil[opcao - 1] == "Admitir funcionario") {
+				System.out.println("<Admitir funcionario>");
+			} else if (opcoes_perfil[opcao - 1] == "Demitir funcionario") {
+				System.out.println("<Demitir funcinario>");
+			} else if (opcoes_perfil[opcao - 1] == "Sair") {
+				this.sair(scan);
+			}
+		}
+	}
+}

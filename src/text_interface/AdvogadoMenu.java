@@ -1,25 +1,46 @@
-package Text_interface;
+package text_interface;
 
 import java.util.Scanner;
+
 import DAO.AdvogadoDAO;
 //import DAO.AdvogadoDAO;
 import modelo.Advogado;
+import modelo.Funcionario;
 
 
 //import java.util.Scanner;
 
 public class AdvogadoMenu {
 	
-	//public Peticao[] consultarPeticao() {}
-	
-	Advogado perfil;
-	
-	public AdvogadoMenu(Advogado perfil){
+	public static void verPerfil(Advogado perfil) {
+		//imprimindo nome
+		System.out.print("Nome: ");
+		System.out.println(perfil.getNome());
 		
-		this.perfil = perfil;
+		//pulando linhas
+		System.out.println();
+		System.out.println();
 		
+		//imprimindo matrícula
+		System.out.print("Matrícula: ");
+		System.out.print(perfil.getMatricula());
+		
+		//pulando linha
+		System.out.println();
+		
+		//imprimindo login
+		System.out.print("Login: ");
+		System.out.print(perfil.getMatricula());
+		
+		//pulando linha
+		System.out.println();
+		
+		//imprimindo oab
+		System.out.print("Oab: ");
+		System.out.print(perfil.getOab());
 	}
-	
+
+	/*
 	public void editarPerfil(Scanner scan){
 		
 		//pedindo usuário a ser atualizado
@@ -52,7 +73,7 @@ public class AdvogadoMenu {
 		
 		//persistindo em banco
 		adao.atualizar(usuario);
-	}
+	}*/
 
 		
 }

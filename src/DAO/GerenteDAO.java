@@ -62,9 +62,10 @@ public class GerenteDAO extends FuncionarioDAO {
 	{
 		Gerente g = null;
 	    try {  	  
-	     	String query = "SELECT * FROM gerentes g INNER JOIN funcionario f ON g.idfuncionario = f.id WHERE login = '" + login + "'";
-	        
+	     	String query = "SELECT * FROM gerente g INNER JOIN funcionario f ON g.idfuncionario = f.id WHERE login = '" + login + "'";
+
 	       	ResultSet rs = stmt.executeQuery(query);
+	       	
 	       	con.commit();
 	       	
 	       	if (rs.next()) 
@@ -85,7 +86,7 @@ public class GerenteDAO extends FuncionarioDAO {
 	{
 		int resultado = -1;
 		try {  	  
-	     	String sql = "DELETE FROM gerentes WHERE idfuncionario = ";
+	     	String sql = "DELETE FROM gerente WHERE idfuncionario = ";
 	     	sql = sql + g.getIdFuncionario();
 	       	resultado = stmt.executeUpdate(sql);
 	       	con.commit();
@@ -102,28 +103,28 @@ public class GerenteDAO extends FuncionarioDAO {
 		
 		
 		conexaoBD ();
-		 try {
-		 // Monta a string sql
-		String sql = "insert into gerentes (idfuncionario) values(?)";
-	
+		try {
+			 // Monta a string sql
+			String sql = "insert into gerente (idfuncionario) values(?)";
 		
+			
+			
+			// Passa a string para o PreparedStatement
+			pstm = con.prepareStatement(sql);
 		
-		// Passa a string para o PreparedStatement
-		pstm = con.prepareStatement(sql);
-	
-		// Coloca os verdadeiros valores no lugar dos ?
-		pstm.setInt(1, funcionario.getId());		
-		
-		System.out.println(pstm);
-		
-		// Executa
-		 pstm.execute();
-		 con.commit();
-		 } catch (SQLException e) {
-		// Retorna uma mensagem informando o erro
-		 JOptionPane.showMessageDialog(null, "Não foi possível salvar os dados!\nInformações sobre o erro:"
-		                               + e, "Inserir", JOptionPane.ERROR_MESSAGE);
-		 e.printStackTrace();
+			// Coloca os verdadeiros valores no lugar dos ?
+			pstm.setInt(1, funcionario.getId());		
+			
+			System.out.println(pstm);
+			
+			// Executa
+			 pstm.execute();
+			 con.commit();
+			 } catch (SQLException e) {
+			// Retorna uma mensagem informando o erro
+			 JOptionPane.showMessageDialog(null, "Não foi possível salvar os dados!\nInformações sobre o erro:"
+			                               + e, "Inserir", JOptionPane.ERROR_MESSAGE);
+			 e.printStackTrace();
 		 }
 	
 	}	
@@ -136,7 +137,7 @@ public class GerenteDAO extends FuncionarioDAO {
 		conexaoBD ();
 		 try {
 		 // Monta a string sql
-		String sql = "update Gerente set Nome = ?, Matricula = ?, Login = ?, Senha = ? where Id = ?";
+		String sql = "update gerente set Nome = ?, Matricula = ?, Login = ?, Senha = ? where Id = ?";
 	
 		// Passa a string para o PreparedStatement
 		 pstm = con.prepareStatement(sql);

@@ -1,4 +1,4 @@
-package Text_interface;
+package text_interface;
 
 import modelo.Funcionario;
 import DAO.FuncionarioDAO;
