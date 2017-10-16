@@ -10,7 +10,7 @@ import DAO.FuncionarioDAO;
 
 public class FuncionarioMenu {
 	 
-	
+	//ver perfil do atual usuário
 	public static void verPerfil(Funcionario perfil) {
 		//imprimindo nome
 		System.out.print("Nome: ");

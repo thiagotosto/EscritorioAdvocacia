@@ -12,6 +12,7 @@ import modelo.Funcionario;
 
 public class AdvogadoMenu {
 	
+	//ve o perfil do atual usuário
 	public static void verPerfil(Advogado perfil) {
 		
 		//pulando uma linha
@@ -44,6 +45,7 @@ public class AdvogadoMenu {
 		System.out.print(perfil.getOab());
 	}
 	
+	//mostra todos os advogados
 	public static void verTodos(){
 		//instanciando AdvogadoDAO e fazendo conexão com o banco
 		AdvogadoDAO adao = new AdvogadoDAO(); 
@@ -59,6 +61,7 @@ public class AdvogadoMenu {
 		}
 	}
 	
+	//admite um advogado
 	public static void admitirAdvogado(Scanner scan) {
 		
 		//instanciando AdvogadoDAO
