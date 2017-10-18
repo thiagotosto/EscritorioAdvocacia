@@ -19,8 +19,7 @@ public class Main {
 		String[] privilegio = mm.descobrePrivilegios(perfil.getLogin());
 		
 		//abrindo menu principal
-		mm.displayMainMenu(privilegio, scan);
-		
+		mm.displayMainMenu(privilegio, scan);		
 				
 	}	
 }

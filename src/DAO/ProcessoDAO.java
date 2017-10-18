@@ -42,12 +42,14 @@ public class ProcessoDAO {
 	       	con.commit();
 	       	if (rs.next()) totalProcessos = rs.getInt(1);
 	     	rs = stmt.executeQuery(query);
-	       	Processo[] p = new Processo[totalProcessos];
+	     	con.commit();
+	     	Processo[] p = new Processo[totalProcessos];
 	       	int i = 0;
-	   	    while (rs.next()) {
+	   	    
+	       	while (rs.next()) {
 	   	      p[i] = new Processo();	
 	          p[i].setId(rs.getInt("Id"));    
-	          p[i].setNome(rs.getString("nome"));
+	          p[i].setNumero(rs.getInt("numero"));
 	          p[i].setDescricao(rs.getString("descricao"));
 	          i++;
 	        }
@@ -75,25 +77,54 @@ public class ProcessoDAO {
 	        return p;
 	      }  catch (SQLException e) {
 	        System.err.print("Erro no SQL: " + e.getMessage());
-	      }
+	      }String
 	   return p;   
 	}*/
 	
-	public Processo consultaPorNome (String nome)
+	public Processo consultaPorNumero (int numero) 
 	{
 		Processo p = null;
 	    try {  	  
-	     	String query = "SELECT * FROM processo WHERE nome = '" + nome + "'";
+	     	String query = "SELECT * FROM processo WHERE numero = '" + numero + "'";
 	       	ResultSet rs = stmt.executeQuery(query);
 	       	con.commit();
 	       	
 	       	if (rs.next()) 
 	   	    {
 	   	      p = new Processo();	
-	          p.setId(rs.getInt("Id"));
-	          p.setNome(rs.getString("Nome"));
+	          p.setId(rs.getInt("idprocesso"));
+	          p.setNumero(rs.getInt("numero"));
 	          p.setDescricao(rs.getString("descricao"));          
 	        }
+	       	
+	       	
+	       	//trazendo caminhos
+	       	
+	       	int totalCaminhos = 1;
+	       	int i = 0;
+	       	
+	       	//contando caminhos
+	       	rs = stmt.executeQuery("SELECT COUNT(idprocesso) FROM processo_documento WHERE idprocesso = '" + p.getId() + "'");
+	       	con.commit();
+	       	
+	       	//gurdando quantidade de caminhos
+	       	if (rs.next()) totalCaminhos = rs.getInt(1);
+	       	
+	       	query = "SELECT caminho, descricao FROM processo_documento WHERE  idprocesso = '" + p.getId() + "'";
+	       	rs = stmt.executeQuery(query);
+	       	con.commit();
+	       	String[][] caminhos = new String[totalCaminhos][2];
+
+	       	//populando vetor com caminhos
+	       	while (rs.next()) 
+	   	    {
+	       		caminhos[i][0] = rs.getString("caminho");
+	       		caminhos[i][1] = rs.getString("descricao");
+	       		i++;
+	        }
+	       	
+	       	p.setDocumentos(caminhos);
+	       	
 	        return p;
 	      }  catch (SQLException e) {
 	        System.err.print("Erro no SQL: " + e.getMessage());
@@ -121,29 +152,56 @@ public class ProcessoDAO {
 		PreparedStatement pstm = null;
 		
 		conexaoBD ();
-		 try {
-		 // Monta a string sql
-		String sql = "insert into processo (nome,descricao) values(?,?)";
-	
-		// Passa a string para o PreparedStatement
-		 pstm = con.prepareStatement(sql);
-	
-		// Coloca os verdadeiros valores no lugar dos ?
-		pstm.setString(1, Processo.getNome());		
-		pstm.setString(2, Processo.getDescricao());
-		
-		// Executa
-		 pstm.execute();
-		 con.commit();
-		
-		 } catch (SQLException e) {
-		// Retorna uma mensagem informando o erro
-		 JOptionPane.showMessageDialog(null, "Não foi possível salvar os dados!\nInformações sobre o erro:"
-		                               + e, "Inserir", JOptionPane.ERROR_MESSAGE);
-		 e.printStackTrace();
+		try {
+				// Monta a string sql
+				String sql = "insert into processo (numero,descricao) values(?,?)";
+			
+				// Passa a string para o PreparedStatement
+				pstm = con.prepareStatement(sql);
+			
+				// Coloca os verdadeiros valores no lugar dos ?
+				pstm.setInt(1, Processo.getNumero());		
+				pstm.setString(2, Processo.getDescricao());
+				
+				// Executa
+				pstm.execute();
+				con.commit();
+			
+			 } catch (SQLException e) {
+				 // Retorna uma mensagem informando o erro
+				 JOptionPane.showMessageDialog(null, "Não foi possível salvar os dados!\nInformações sobre o erro:"
+				                               + e, "Inserir", JOptionPane.ERROR_MESSAGE);
+				 e.printStackTrace();
 		 }
 	
 	}	
+	
+	//insere documento novo
+	public void inserirDocumentos(Processo p, String[][] caminhos) {
+		// Cria um PreparedStatement
+		PreparedStatement pstm = null;
+		try {
+			for (int i = 0; i < caminhos.length; i++) {
+				//monta string
+				String sql = "INSERT INTO processo_documento (idprocesso, caminho, descricao) VALUES (?,?,?)";
+				
+				pstm = con.prepareStatement(sql);
+				
+				pstm.setInt(1, p.getId());
+				pstm.setString(2, caminhos[i][0]);
+				pstm.setString(3, caminhos[i][1]);
+				
+				//executa
+				pstm.execute();
+				con.commit();
+			}
+		} catch (SQLException e) {
+			// Retorna uma mensagem informando o erro
+			 JOptionPane.showMessageDialog(null, "Não foi possível salvar os dados!\nInformações sobre o erro:"
+			                               + e, "Inserir", JOptionPane.ERROR_MESSAGE);
+			 e.printStackTrace();
+		}	
+	}
 	
 	public void atualizar (Processo Processo) {
 	
@@ -153,19 +211,42 @@ public class ProcessoDAO {
 		conexaoBD ();
 		 try {
 			// Monta a string sql
-			String sql = "update processo set nome = ?, descricao= ? where Id = ?";
+			String sql = "update processo set numero = ?, descricao= ? where idprocesso = ?";
 		
 			// Passa a string para o PreparedStatement
 			pstm = con.prepareStatement(sql);
-		
+			
+			System.out.println("\n\n" + Processo.getNumero());
+			
 			// Coloca os verdadeiros valores no lugar dos ?
-			pstm.setString(1, Processo.getNome());
+			pstm.setInt(1, Processo.getNumero());
 			pstm.setString(2, Processo.getDescricao());
 			pstm.setInt(3, Processo.getId());	
 			
 			// Executa
 			pstm.execute();
 			con.commit();
+			
+			//atualizando documentos
+			//ERRADOOOOOOOO!!!!
+			
+			for (int i = 0; i < Processo.getDocumentos().length; i++) {
+				//Monta a string sql
+				sql = "UPDATE processo_documento SET caminho = ?, descricao = ? where idprocesso = ?";
+				
+				//passa string para o PreparedStatement
+				pstm = con.prepareStatement(sql);
+				
+				//Coloca os verdadeiros valores no lugar dos ?
+				pstm.setString(1, Processo.getDocumentos()[i][0]);
+				pstm.setString(2, Processo.getDocumentos()[i][1]);
+				pstm.setInt(3, Processo.getId());
+				
+				pstm.execute();
+				con.commit();
+			}
+			
+			
 			
 		 } catch (SQLException e) {
 		// Retorna uma mensagem informando o erro
