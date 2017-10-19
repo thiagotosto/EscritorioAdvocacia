@@ -3,12 +3,8 @@ package DAO;
 import java.sql.*;
 import javax.swing.*;
 import modelo.Processo;
-/**
- * @author Orlando
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
+
+
 public class ProcessoDAO {
 
 	Statement stmt;
@@ -110,16 +106,17 @@ public class ProcessoDAO {
 	       	//gurdando quantidade de caminhos
 	       	if (rs.next()) totalCaminhos = rs.getInt(1);
 	       	
-	       	query = "SELECT caminho, descricao FROM processo_documento WHERE  idprocesso = '" + p.getId() + "'";
+	       	query = "SELECT idprocesso_documento, caminho, descricao FROM processo_documento WHERE  idprocesso = '" + p.getId() + "'";
 	       	rs = stmt.executeQuery(query);
 	       	con.commit();
-	       	String[][] caminhos = new String[totalCaminhos][2];
+	       	String[][] caminhos = new String[totalCaminhos][3];
 
 	       	//populando vetor com caminhos
 	       	while (rs.next()) 
 	   	    {
-	       		caminhos[i][0] = rs.getString("caminho");
-	       		caminhos[i][1] = rs.getString("descricao");
+	       		caminhos[i][0] = Integer.toString(rs.getInt("idprocesso_documento")); //coletando idprocesso mque é uma String e passando para int
+	       		caminhos[i][1] = rs.getString("caminho");
+	       		caminhos[i][2] = rs.getString("descricao");
 	       		i++;
 	        }
 	       	
@@ -216,8 +213,6 @@ public class ProcessoDAO {
 			// Passa a string para o PreparedStatement
 			pstm = con.prepareStatement(sql);
 			
-			System.out.println("\n\n" + Processo.getNumero());
-			
 			// Coloca os verdadeiros valores no lugar dos ?
 			pstm.setInt(1, Processo.getNumero());
 			pstm.setString(2, Processo.getDescricao());
@@ -228,25 +223,23 @@ public class ProcessoDAO {
 			con.commit();
 			
 			//atualizando documentos
-			//ERRADOOOOOOOO!!!!
 			
 			for (int i = 0; i < Processo.getDocumentos().length; i++) {
 				//Monta a string sql
-				sql = "UPDATE processo_documento SET caminho = ?, descricao = ? where idprocesso = ?";
+				sql = "UPDATE processo_documento SET caminho = ?, descricao = ? where idprocesso_documento = ?";
 				
 				//passa string para o PreparedStatement
 				pstm = con.prepareStatement(sql);
 				
 				//Coloca os verdadeiros valores no lugar dos ?
-				pstm.setString(1, Processo.getDocumentos()[i][0]);
-				pstm.setString(2, Processo.getDocumentos()[i][1]);
-				pstm.setInt(3, Processo.getId());
-				
+				pstm.setString(1, Processo.getDocumentos()[i][1]);
+				pstm.setString(2, Processo.getDocumentos()[i][2]);
+				pstm.setInt(3, Integer.valueOf(Processo.getDocumentos()[i][0])); //convertendo idprocesso para int para persistir no banco
+
+				//executando
 				pstm.execute();
 				con.commit();
 			}
-			
-			
 			
 		 } catch (SQLException e) {
 		// Retorna uma mensagem informando o erro

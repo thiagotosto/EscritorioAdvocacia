@@ -39,12 +39,17 @@ public class Processo_teste {
 		
 		Processo processo = pdao.consultaPorNumero(125);
 		
-		processo.setDescricao("processo3 teste1");
+		processo.setDescricao("processo3 teste2");
+		
+		String[][] teste = processo.getDocumentos();
+		teste[0][2] = "pdf4";
+		
+		processo.setDocumentos(teste);
 		
 		System.out.println(processo.getId());
 		System.out.println(processo.getNumero());
 		for (int i = 0; i < processo.getDocumentos().length; i++) {
-			System.out.println(processo.getDocumentos()[i][0] + " : " + processo.getDocumentos()[i][1]);
+			System.out.println(processo.getDocumentos()[i][1] + " : " + processo.getDocumentos()[i][2]);
 		}
 		pdao.atualizar(processo);
 	}
