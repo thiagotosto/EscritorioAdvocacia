@@ -37,6 +37,7 @@ public class Processo_teste {
 		
 		pdao.inserirDocumentos(processo, caminhos_teste);*/
 		
+		/*
 		Processo processo = pdao.consultaPorNumero(125);
 		
 		processo.setDescricao("processo3 teste2");
@@ -51,6 +52,6 @@ public class Processo_teste {
 		for (int i = 0; i < processo.getDocumentos().length; i++) {
 			System.out.println(processo.getDocumentos()[i][1] + " : " + processo.getDocumentos()[i][2]);
 		}
-		pdao.atualizar(processo);
+		pdao.atualizar(processo);*/
 	}
 }
