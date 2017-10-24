@@ -3,6 +3,7 @@ package DAO;
 import java.sql.*;
 import javax.swing.*;
 import modelo.Processo;
+import modelo.Cliente;
 
 
 public class ProcessoDAO {
@@ -33,8 +34,8 @@ public class ProcessoDAO {
 		int totalProcessos = 1;
 		Processo[] p1 = new Processo[1];
 	    try {  	  
-	     	String query = "SELECT * FROM processo Order by Id";
-	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(Id)FROM Processo");
+	     	String query = "SELECT * FROM processo Order by idprocesso";
+	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(idprocesso)FROM processo");
 	       	con.commit();
 	       	if (rs.next()) totalProcessos = rs.getInt(1);
 	     	rs = stmt.executeQuery(query);
@@ -44,7 +45,7 @@ public class ProcessoDAO {
 	   	    
 	       	while (rs.next()) {
 	   	      p[i] = new Processo();	
-	          p[i].setId(rs.getInt("Id"));    
+	          p[i].setId(rs.getInt("idprocesso"));    
 	          p[i].setNumero(rs.getInt("numero"));
 	          p[i].setDescricao(rs.getString("descricao"));
 	          i++;
@@ -94,7 +95,7 @@ public class ProcessoDAO {
 	        }
 	       	
 	       	
-	       	//trazendo caminhos
+	       	//TRAZENDO CAMINHOS ----------------------------------------------------------------------------------------
 	       	
 	       	int totalCaminhos = 1;
 	       	int i = 0;
@@ -120,7 +121,36 @@ public class ProcessoDAO {
 	       		i++;
 	        }
 	       	
-	       	p.setDocumentos(caminhos);
+	    	p.setDocumentos(caminhos);
+	    	
+	        //TRAZENDO CLIENTES ------------------------------------------------------------------------------------------
+	       	
+	    	int totalClientes = 1;
+	       	i = 0;
+	       	
+	       	//contando clientes
+	       	rs = stmt.executeQuery("SELECT COUNT(idprocesso) FROM processo_cliente WHERE idprocesso = '" + p.getId() + "'");
+	       	con.commit();
+	       	
+	       	//gurdando quantidade de caminhos
+	       	if (rs.next()) totalClientes = rs.getInt(1);
+	       	
+	       	query = "SELECT pc.idcliente, nome, cpf  FROM processo_cliente pc INNER JOIN  cliente c ON c.idcliente = pc.idcliente WHERE pc.idprocesso = '" + p.getId() + "'";
+	       	rs = stmt.executeQuery(query);
+	       	con.commit();
+	       	Cliente[] clientes = new Cliente[totalClientes];
+
+	       	//populando vetor com clientes
+	       	while (rs.next()) 
+	   	    {
+	       		clientes[i] = new Cliente();
+	       		clientes[i].setId((rs.getInt("idcliente")));
+	       		clientes[i].setNome(rs.getString("nome"));
+	       		clientes[i].setCpf(rs.getString("cpf"));
+	       		i++;
+	        }
+	       	
+	       	p.setClientes(clientes);	       
 	       	
 	        return p;
 	      }  catch (SQLException e) {
@@ -133,7 +163,7 @@ public class ProcessoDAO {
 	{
 		int resultado = -1;
 		try {  	  
-	     	String sql = "DELETE FROM processo WHERE Id = ";
+	     	String sql = "DELETE FROM processo WHERE idprocesso = ";
 	     	sql = sql + p.getId();
 	       	resultado = stmt.executeUpdate(sql);  
 	       	con.commit();
@@ -198,6 +228,52 @@ public class ProcessoDAO {
 			                               + e, "Inserir", JOptionPane.ERROR_MESSAGE);
 			 e.printStackTrace();
 		}	
+	}
+	
+	public void inserirClientes(Processo p, Cliente[] clientes) {
+		// Cria um PreparedStatement
+		PreparedStatement pstm = null;
+		try {
+			for (int i = 0; i < clientes.length; i++) {
+				//monta string
+				String sql = "INSERT INTO processo_cliente (idprocesso, idcliente) VALUES (?,?)";
+				
+				pstm = con.prepareStatement(sql);
+				
+				pstm.setInt(1, p.getId());
+				pstm.setInt(2, clientes[i].getId());
+				
+				
+				//executa
+				pstm.execute();
+				con.commit();
+			}
+		} catch (SQLException e) {
+			// Retorna uma mensagem informando o erro
+			 JOptionPane.showMessageDialog(null, "Não foi possível salvar os dados!\nInformações sobre o erro:"
+			                               + e, "Inserir", JOptionPane.ERROR_MESSAGE);
+			 e.printStackTrace();
+		}			
+	}
+	
+	public int  retirarCliente(Processo p,Cliente c) {
+		int resultado = -1;
+		PreparedStatement pstm = null;
+		
+		try {  	  
+	     	String sql = "DELETE FROM processo_cliente WHERE idprocesso = ? AND idcliente = ?";
+	     	
+	     	pstm = con.prepareStatement(sql);
+	     	
+	     	pstm.setInt(1, p.getId());
+	     	pstm.setInt(2, c.getId());
+	     	
+	       	resultado = pstm.executeUpdate();  
+	       	con.commit();
+	      }  catch (SQLException e) {
+	        System.err.print("Erro no SQL: " + e.getMessage());
+	      }
+	    return resultado;
 	}
 	
 	public void atualizar (Processo Processo) {

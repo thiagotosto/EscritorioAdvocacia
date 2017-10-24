@@ -108,7 +108,7 @@ public class MainMenu {
 		}
 	}
 	
-	public static void verFuncionarios() {
+	public static void mostraFuncionarios() {
 		//pulando linha
 		System.out.println();
 		
@@ -135,9 +135,9 @@ public class MainMenu {
 		adao.conexaoBD();
 		
 		//montando opções de cada perfil
-		String[] opcoes_funcionario = {"Ver perfil","Consultar agenda", "Mudar senha"};
-		String[] opcoes_advogado = {"Consultar processos", "Cadastrar processo", "Consultar Cliente"};
-		String[] opcoes_gerente = {"Ver funcionários", "Promover funcionário", "Rebaixar funcionário", "Admitir funcionário",
+		String[] opcoes_funcionario = {"Ver perfil","Consultar tarefas", "Mudar senha"};
+		String[] opcoes_advogado = {"Consultar processos", "Cadastrar processo", "Deletar processo",  "Consultar Cliente"};
+		String[] opcoes_gerente = {"Ver funcionários","Ver gerentes", "Promover funcionário", "Rebaixar funcionário", "Admitir funcionário",
 				"Demitir funcionário"};
 		String[] sair = {"Sair"};
 		
@@ -195,15 +195,19 @@ public class MainMenu {
 			} else if (opcoes_perfil[opcao - 1] == "Mudar senha") {
 				FuncionarioMenu.mudarSenha(this.perfil, scan);
 			} else if (opcoes_perfil[opcao - 1] == "Consultar processos") {
-				System.out.println("<Consultar processos>");
+				ProcessoMenu.mostraProcessos(scan);
 			} else if (opcoes_perfil[opcao - 1] == "Cadastrar processo") {
-				System.out.println("<Cadastrar processo>");
+				ProcessoMenu.cadastraProcesso(scan);
+			} else if (opcoes_perfil[opcao - 1] == "Deletar processo") {
+				ProcessoMenu.deletaProcesso(scan);
 			} else if (opcoes_perfil[opcao - 1] == "Consultar cliente") {
 				System.out.println("<Consultar cliente>");
 			} else if (opcoes_perfil[opcao - 1] == "Promover funcionário") {
 				GerenteMenu.promoverGerente(scan);
 			} else if (opcoes_perfil[opcao - 1] == "Ver funcionários") {
-				MainMenu.verFuncionarios();
+				MainMenu.mostraFuncionarios();
+			} else if (opcoes_perfil[opcao - 1] == "Ver gerentes") {
+				GerenteMenu.mostraTodosGerentes(scan);
 			} else if (opcoes_perfil[opcao - 1] == "Rebaixar funcionário") {
 				GerenteMenu.despromoverGerente(scan);
 			} else if (opcoes_perfil[opcao - 1] == "Admitir funcionário") {

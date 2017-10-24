@@ -135,4 +135,23 @@ public class GerenteMenu {
 			System.out.println("Esse funcionário não é gerente!");
 		}
 	}
+	
+	//printa todos os gerentes
+	public static void mostraTodosGerentes(Scanner scan) {
+		//instanciando GerenteDAO e conectando no banco
+		GerenteDAO gdao = new GerenteDAO();
+		gdao.conexaoBD();
+		
+		Gerente[] gerentes = gdao.consultaTodos();
+		
+		//header
+		System.out.printf("\n%-30s%-30s%-15s\n","Nome","Login","Matrícula");
+		//pulando linha
+		System.out.println();
+		
+		for (int i = 0; i < gerentes.length; i++) {
+			//dados
+			System.out.printf("\n%-30s%-30s%-15s\n",gerentes[i].getNome(),gerentes[i].getLogin(),gerentes[i].getMatricula());
+		}
+	}
 }

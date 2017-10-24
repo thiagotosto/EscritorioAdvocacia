@@ -16,20 +16,24 @@ public class GerenteDAO extends FuncionarioDAO {
 		Gerente[] p1 = new Gerente[1];
 	    try {  	  
 	     	String query = "SELECT * FROM gerente g INNER JOIN funcionario f ON g.idfuncionario = f.id Order by idgerente";
-	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(Id)FROM gerente");
+	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(idgerente)FROM gerente");
 	       	if (rs.next()) totalGerentes = rs.getInt(1);
 	     	rs = stmt.executeQuery(query);
 	     	con.commit();
 	     	
-	       	Gerente[] p = new Gerente[totalGerentes];
+	       	Gerente[] g = new Gerente[totalGerentes];
 	       	int i = 0;
 	   	    while (rs.next()) {
-	   	      p[i] = new Gerente();	
-	          p[i].setIdGerente(rs.getInt("idgerente"));     // Pega o primeiro campo do tipo Int
-	          p[i].setId(rs.getInt("idfuncionario"));// Pega o segundo campo do tipo String
+	   	      g[i] = new Gerente();	
+	   	      g[i].setNome(rs.getString("nome"));
+	   	      g[i].setMatricula(rs.getString("matricula"));
+	   	      g[i].setLogin(rs.getString("login"));
+	   	      g[i].setSenha(rs.getString("senha"));
+	          g[i].setIdGerente(rs.getInt("idgerente"));     // Pega o primeiro campo do tipo Int
+	          g[i].setId(rs.getInt("idfuncionario"));// Pega o segundo campo do tipo String
 	          i++;
 	        }
-	        return p;
+	        return g;
 	      }  catch (SQLException e) {
 	        System.err.print("Erro no SQL: " + e.getMessage());
 	      }
