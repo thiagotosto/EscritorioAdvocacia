@@ -4,7 +4,7 @@ import java.sql.*;
 import javax.swing.*;
 import modelo.Processo;
 import modelo.Cliente;
-
+import modelo.Advogado;
 
 public class ProcessoDAO {
 
@@ -36,6 +36,34 @@ public class ProcessoDAO {
 	    try {  	  
 	     	String query = "SELECT * FROM processo Order by idprocesso";
 	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(idprocesso)FROM processo");
+	       	con.commit();
+	       	if (rs.next()) totalProcessos = rs.getInt(1);
+	     	rs = stmt.executeQuery(query);
+	     	con.commit();
+	     	Processo[] p = new Processo[totalProcessos];
+	       	int i = 0;
+	   	    
+	       	while (rs.next()) {
+	   	      p[i] = new Processo();	
+	          p[i].setId(rs.getInt("idprocesso"));    
+	          p[i].setNumero(rs.getInt("numero"));
+	          p[i].setDescricao(rs.getString("descricao"));
+	          i++;
+	        }
+	        return p;
+	      }  catch (SQLException e) {
+	        System.err.print("Erro no SQL: " + e.getMessage());
+	      }
+	   return p1;   
+	}
+	
+	public Processo[] consultaTodos (Advogado advogado)
+	{
+		int totalProcessos = 1;
+		Processo[] p1 = new Processo[1];
+	    try {  	  
+	     	String query = "SELECT * FROM processo p INNER JOIN processo_advogado pa ON p.idprocesso = pa.idpeticao WHERE pa.idadvogado = "+ advogado.getIdAdvogado() +" Order by idprocesso";
+	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(p.idprocesso)FROM processo p INNER JOIN processo_advogado pa ON p.idprocesso = pa.idpeticao WHERE pa.idadvogado = " + advogado.getIdAdvogado());
 	       	con.commit();
 	       	if (rs.next()) totalProcessos = rs.getInt(1);
 	     	rs = stmt.executeQuery(query);
@@ -202,6 +230,46 @@ public class ProcessoDAO {
 		 }
 	
 	}	
+
+	public void inserir(Processo Processo, Advogado advogado) {
+		
+		// Cria um PreparedStatement
+		PreparedStatement pstm = null;
+		
+		conexaoBD ();
+		try {
+				// Monta a string sql
+				String sql = "insert into processo (numero,descricao) values(?,?)";
+			
+				// Passa a string para o PreparedStatement
+				pstm = con.prepareStatement(sql);
+			
+				// Coloca os verdadeiros valores no lugar dos ?
+				pstm.setInt(1, Processo.getNumero());		
+				pstm.setString(2, Processo.getDescricao());
+				
+				// Executa
+				pstm.execute();
+				con.commit();
+				
+				sql = "insert into processo_advogado (idadvogado, idpeticao) values (?, LAST_INSERT_ID())";
+				
+				pstm = con.prepareStatement(sql);
+				
+				pstm.setInt(1, advogado.getIdAdvogado());
+				
+				pstm.execute();
+				con.commit();
+			
+			 } catch (SQLException e) {
+				 // Retorna uma mensagem informando o erro
+				 JOptionPane.showMessageDialog(null, "Não foi possível salvar os dados!\nInformações sobre o erro:"
+				                               + e, "Inserir", JOptionPane.ERROR_MESSAGE);
+				 e.printStackTrace();
+		 }
+	
+	}	
+
 	
 	//insere documento novo
 	public void inserirDocumentos(Processo p, String[][] caminhos) {

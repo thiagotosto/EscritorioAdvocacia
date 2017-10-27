@@ -6,6 +6,7 @@ import utils.Utils;
 
 //import modelo.Advogado;
 import modelo.Funcionario;
+import modelo.Tarefa;
 import DAO.*;
 //import modelo.*;
 import text_interface.*;
@@ -135,7 +136,7 @@ public class MainMenu {
 		adao.conexaoBD();
 		
 		//montando opções de cada perfil
-		String[] opcoes_funcionario = {"Ver perfil","Consultar tarefas", "Mudar senha"};
+		String[] opcoes_funcionario = {"Ver perfil","Consultar tarefas", "Consumir tarefa", "Mudar senha"};
 		String[] opcoes_advogado = {"Consultar processos", "Cadastrar processo", "Deletar processo",  "Consultar Cliente"};
 		String[] opcoes_gerente = {"Ver funcionários","Ver gerentes", "Promover funcionário", "Rebaixar funcionário", "Admitir funcionário",
 				"Demitir funcionário"};
@@ -190,18 +191,21 @@ public class MainMenu {
 				} else {
 					FuncionarioMenu.verPerfil(this.perfil);
 				}
-			} else if (opcoes_perfil[opcao - 1] == "Consultar agenda") {
-				System.out.println("<Consultar agenda>");
+			} else if (opcoes_perfil[opcao - 1] == "Consultar tarefas") {
+				TarefaMenu.consultarTarefas(scan, this.perfil);
+			} else if (opcoes_perfil[opcao - 1] == "Consumir tarefa") {
+				Tarefa[] tarefas = TarefaMenu.consultarTarefas(scan, this.perfil);
+				TarefaMenu.consumirTarefa(scan, tarefas);
 			} else if (opcoes_perfil[opcao - 1] == "Mudar senha") {
-				FuncionarioMenu.mudarSenha(this.perfil, scan);
+				FuncionarioMenu.mudarSenha(scan, this.perfil);
 			} else if (opcoes_perfil[opcao - 1] == "Consultar processos") {
-				ProcessoMenu.mostraProcessos(scan);
+				ProcessoMenu.mostraProcessos(scan, adao.consultaPorLogin(perfil.getLogin()));
 			} else if (opcoes_perfil[opcao - 1] == "Cadastrar processo") {
-				ProcessoMenu.cadastraProcesso(scan);
+				ProcessoMenu.cadastraProcesso(scan, adao.consultaPorLogin(perfil.getLogin()));
 			} else if (opcoes_perfil[opcao - 1] == "Deletar processo") {
 				ProcessoMenu.deletaProcesso(scan);
-			} else if (opcoes_perfil[opcao - 1] == "Consultar cliente") {
-				System.out.println("<Consultar cliente>");
+			} else if (opcoes_perfil[opcao - 1] == "Consultar Cliente") {
+				ClienteMenu.consultarClientes(scan, adao.consultaPorLogin(perfil.getLogin()));
 			} else if (opcoes_perfil[opcao - 1] == "Promover funcionário") {
 				GerenteMenu.promoverGerente(scan);
 			} else if (opcoes_perfil[opcao - 1] == "Ver funcionários") {

@@ -46,7 +46,8 @@ public class AdvogadoDAO {
 	       	int i = 0;
 	   	    while (rs.next()) {
 	   	      p[i] = new Advogado();	
-	          p[i].setId(rs.getInt("idadvogado"));
+	          p[i].setId(rs.getInt("idfuncionario"));
+	          p[i].setIdAdvogado(rs.getInt("id"));
 	          p[i].setNome(rs.getString("Nome"));
 	          p[i].setLogin(rs.getString("login"));
 	          p[i].setMatricula(rs.getString("Matricula"));
@@ -92,8 +93,9 @@ public class AdvogadoDAO {
 	       	
 	       	if (rs.next()) 
 	   	    {
-	   	      a = new Advogado();	
-	          a.setId(rs.getInt("idfuncionario"));     
+	   	      a = new Advogado();
+	   	      a.setId(rs.getInt("id"));
+	          a.setIdAdvogado(rs.getInt("idadvogado"));     
 	          a.setNome(rs.getString("Nome"));
 	          a.setMatricula(rs.getString("Matricula"));          
 	          a.setLogin(login);

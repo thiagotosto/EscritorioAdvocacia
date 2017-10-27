@@ -1,5 +1,6 @@
 package text_interface;
 
+import modelo.Advogado;
 import modelo.Processo;
 import DAO.ProcessoDAO;
 
@@ -7,13 +8,13 @@ import java.util.Scanner;
 
 public class ProcessoMenu {
 
-	public static void mostraProcessos(Scanner scan) {
+	public static void mostraProcessos(Scanner scan, Advogado perfil) {
 		//instanciando ProcessoDAO e conectando no banco
 		ProcessoDAO pdao = new ProcessoDAO();
 		pdao.conexaoBD();
 		
 		//carregando todos os processos
-		Processo[] processos = pdao.consultaTodos();
+		Processo[] processos = pdao.consultaTodos(perfil);
 		
 		//printando header
 		System.out.printf("\n%-30s%-15s\n","Numero","Descrição");
@@ -28,7 +29,7 @@ public class ProcessoMenu {
 		
 	}
 	
-	public static void cadastraProcesso(Scanner scan) {
+	public static void cadastraProcesso(Scanner scan, Advogado perfil) {
 		//instanciando ProcessoDAO e conectando no banco
 		ProcessoDAO pdao = new ProcessoDAO();
 		pdao.conexaoBD();
@@ -44,7 +45,7 @@ public class ProcessoMenu {
 		processo.setNumero(Integer.parseInt(scan.nextLine()));
 		
 		//inserindo processo novo
-		pdao.inserir(processo);
+		pdao.inserir(processo, perfil);
 	}
 	
 	public static void deletaProcesso(Scanner scan) {

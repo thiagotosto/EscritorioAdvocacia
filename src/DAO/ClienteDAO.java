@@ -1,7 +1,10 @@
 package DAO;
 
 import java.sql.*;
+
 import javax.swing.*;
+
+import modelo.Advogado;
 import modelo.Cliente;
 
 public class ClienteDAO {
@@ -37,6 +40,60 @@ public class ClienteDAO {
 	       	con.commit();
 	       	if (rs.next()) totalClientes = rs.getInt(1);
 	     	rs = stmt.executeQuery(query);
+	       	Cliente[] c = new Cliente[totalClientes];
+	       	int i = 0;
+	   	    while (rs.next()) {
+	   	      c[i] = new Cliente();	
+	          c[i].setId(rs.getInt("idcliente"));     // Pega o primeiro campo do tipo Int
+	          c[i].setNome(rs.getString("Nome"));// Pega o segundo campo do tipo String
+	          c[i].setCpf(rs.getString("cpf")); //Pega o terciro campo do tipo String
+	          i++;
+	        }
+	        return c;
+	      }  catch (SQLException e) {
+	        System.err.print("Erro no SQL: " + e.getMessage());
+	      }
+	   return p1;   
+	}
+	
+	public Cliente[] consultaTodos (Advogado advogado)
+	{
+		int totalClientes = 1;
+		Cliente[] p1 = new Cliente[1];
+	    try {  	  
+	    	//buscando clientes que tem relação com algum processo que um certo advogado trabalha
+	     	String query = "SELECT * " 
+					 +	   "FROM "
+					 +			"cliente c INNER JOIN  ( "
+					 +				"SELECT idcliente, idadvogado "
+					 +		        "FROM " 
+					 + 					"processo_cliente pc INNER JOIN processo_advogado pa "
+					 +		        "ON pc.idprocesso = pa.idpeticao "
+					 +		    ") x "
+					 +		"ON "
+					 +	 		"x.idcliente = c.idcliente "
+					 + 		"WHERE "
+					 + 			"idadvogado = " + advogado.getIdAdvogado();
+	     		     	
+	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(c.idcliente) " 
+					 +	   "FROM "
+					 +			"cliente c INNER JOIN  ( "
+					 +				"SELECT idcliente, idadvogado "
+					 +		        "FROM " 
+					 + 					"processo_cliente pc INNER JOIN processo_advogado pa "
+					 +		        "ON pc.idprocesso = pa.idpeticao "
+					 +		    ") x "
+					 +		"ON "
+					 +	 		"x.idcliente = c.idcliente "
+					 + 		"WHERE "
+					 + 			"idadvogado = " + advogado.getIdAdvogado());
+	       	
+	       	
+	       	con.commit();
+	       	if (rs.next()) totalClientes = rs.getInt(1);
+	       		     	
+	       	rs = stmt.executeQuery(query);
+	     	con.commit();
 	       	Cliente[] c = new Cliente[totalClientes];
 	       	int i = 0;
 	   	    while (rs.next()) {

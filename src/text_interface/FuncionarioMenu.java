@@ -36,7 +36,7 @@ public class FuncionarioMenu {
 		
 	}
 	
-	public static void mudarSenha(Funcionario perfil, Scanner scan) {
+	public static void mudarSenha(Scanner scan, Funcionario perfil) {
 		//instanciando funciionario DAO
 		FuncionarioDAO fdao = new FuncionarioDAO();
 		

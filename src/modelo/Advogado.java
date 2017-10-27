@@ -8,7 +8,7 @@ package modelo;
  */
 public class Advogado extends Funcionario{
 
-	int Id;
+	int idadvogado;
 	String oab;
 	
 	//retorna oab
@@ -19,5 +19,13 @@ public class Advogado extends Funcionario{
 	//seta oab
 	public void setOab(String oab) {
 		this.oab = oab;
+	}
+	
+	public void setIdAdvogado(int id) {
+		this.idadvogado = id;
+	}
+	
+	public int getIdAdvogado() {
+		return this.idadvogado;
 	}
 }

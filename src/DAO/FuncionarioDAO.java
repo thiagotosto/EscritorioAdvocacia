@@ -60,23 +60,25 @@ public class FuncionarioDAO {
 	
 	public Funcionario consultaPorId (int Id)
 	{
-		Funcionario p = null;
+		Funcionario f = null;
 	    try {  	  
-	     	String query = "SELECT * FROM Funcionario WHERE Id = " + Id;
+	     	String query = "SELECT * FROM funcionario WHERE Id = " + Id;
 	       	ResultSet rs = stmt.executeQuery(query);
 	       	con.commit();
 	       	if (rs.next()) 
 	   	    {
-	   	      p = new Funcionario();	
-	          p.setId(rs.getInt("Id"));     // Pega o primeiro campo do tipo Int
-	          p.setNome(rs.getString("Nome"));// Pega o segundo campo do tipo String
-	          p.setMatricula(rs.getString("Matricula"));          
+	   	      f = new Funcionario();	
+	          f.setId(rs.getInt("Id"));     // Pega o primeiro campo do tipo Int
+	          f.setNome(rs.getString("Nome"));// Pega o segundo campo do tipo String
+	          f.setMatricula(rs.getString("Matricula")); 
+	          f.setLogin(rs.getString("login"));
+	          f.setSenha(rs.getString("senha"));
 	        }
-	        return p;
+	        return f;
 	      }  catch (SQLException e) {
 	        System.err.print("Erro no SQL: " + e.getMessage());
 	      }
-	   return p;   
+	   return f;   
 	}
 	
 	public Funcionario consultaPorLogin (String login)
@@ -138,6 +140,38 @@ public class FuncionarioDAO {
 		// Executa
 		 pstm.execute();
 		 con.commit();
+		 } catch (SQLException e) {
+		// Retorna uma mensagem informando o erro
+		 JOptionPane.showMessageDialog(null, "Não foi possível salvar os dados!\nInformações sobre o erro:"
+		                               + e, "Inserir", JOptionPane.ERROR_MESSAGE);
+		 e.printStackTrace();
+		 }
+	
+	}	
+	
+	public void inserir(Funcionario Funcionario, String nocommit) {
+		
+		// Cria um PreparedStatement
+		PreparedStatement pstm = null;
+		
+		conexaoBD ();
+		 try {
+		 // Monta a string sql
+		String sql = "insert into funcionario (Nome,Matricula,Login, Senha) values(?,?,?,?)";
+	
+		// Passa a string para o PreparedStatement
+		 pstm = con.prepareStatement(sql);
+	
+		// Coloca os verdadeiros valores no lugar dos ?
+		pstm.setString(1, Funcionario.getNome());		
+		pstm.setString(2, Funcionario.getMatricula());
+		pstm.setString(3, Funcionario.getLogin());
+		pstm.setString(4, Funcionario.getSenha());
+		// Executa
+		 pstm.execute();
+		 
+		 //nao comitar transição se for requisitado por um filho
+		 if(nocommit != "NoCommit") con.commit();
 		 } catch (SQLException e) {
 		// Retorna uma mensagem informando o erro
 		 JOptionPane.showMessageDialog(null, "Não foi possível salvar os dados!\nInformações sobre o erro:"

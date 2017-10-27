@@ -1,7 +1,9 @@
 package text_interface;
 
 import DAO.ClienteDAO;
+import DAO.AdvogadoDAO;
 import modelo.Cliente;
+import modelo.Advogado;
 
 
 public class Cliente_teste {
@@ -11,6 +13,15 @@ public class Cliente_teste {
 		ClienteDAO cdao = new ClienteDAO();
 		cdao.conexaoBD();
 		
+		AdvogadoDAO adao = new AdvogadoDAO();
+		adao.conexaoBD();		
+		
+		
+		Cliente[] clientes = cdao.consultaTodos(adao.consultaPorLogin("rossi"));
+		
+		for (int i = 0; i < clientes.length; i++) {
+			System.out.println(clientes[i].getNome());
+		}
 		/*
 		//inserindo cliente novo
 		Cliente cnovo = new Cliente();
@@ -18,7 +29,7 @@ public class Cliente_teste {
 		cnovo.setCpf("78954632145");
 		cdao.inserir(cnovo);
 		*/
-		
+		/*
 		//resgatando cliente inserido
 		Cliente cresgate = cdao.consultaPorNome("Pariz");
 		System.out.println("Nome: " + cresgate.getNome());
@@ -35,7 +46,7 @@ public class Cliente_teste {
 		
 		//deletando usuario
 		cdao.excluir(cresgate);
-		
+		*/
 	}
 	
 }

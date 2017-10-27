@@ -168,7 +168,7 @@ CREATE TABLE `processo` (
   PRIMARY KEY (`idprocesso`),
   UNIQUE KEY `id_UNIQUE` (`idprocesso`),
   UNIQUE KEY `numero_UNIQUE` (`numero`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -280,7 +280,8 @@ CREATE TABLE `secretaria` (
   `idfuncionario` int(11) NOT NULL,
   PRIMARY KEY (`idsecretaria`),
   UNIQUE KEY `idsecretaria_UNIQUE` (`idsecretaria`),
-  UNIQUE KEY `idfuncionario_UNIQUE` (`idfuncionario`)
+  UNIQUE KEY `idfuncionario_UNIQUE` (`idfuncionario`),
+  CONSTRAINT `fk_secretaria_1` FOREIGN KEY (`idfuncionario`) REFERENCES `funcionario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -292,6 +293,36 @@ LOCK TABLES `secretaria` WRITE;
 /*!40000 ALTER TABLE `secretaria` DISABLE KEYS */;
 /*!40000 ALTER TABLE `secretaria` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `tarefa`
+--
+
+DROP TABLE IF EXISTS `tarefa`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tarefa` (
+  `idtarefa` int(11) NOT NULL AUTO_INCREMENT,
+  `idfuncionario` int(11) NOT NULL,
+  `descricao` varchar(100) DEFAULT NULL,
+  `dataExpr` date DEFAULT NULL,
+  `dataExpd` date NOT NULL,
+  PRIMARY KEY (`idtarefa`),
+  UNIQUE KEY `idagenda_UNIQUE` (`idtarefa`),
+  KEY `fk_tarefa_1_idx` (`idfuncionario`),
+  CONSTRAINT `fk_tarefa_1` FOREIGN KEY (`idfuncionario`) REFERENCES `funcionario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tarefa`
+--
+
+LOCK TABLES `tarefa` WRITE;
+/*!40000 ALTER TABLE `tarefa` DISABLE KEYS */;
+INSERT INTO `tarefa` VALUES (3,2,'tarefa teste 1','2017-11-26','2017-10-26'),(4,2,'tarefa teste 2','2017-11-27','2017-10-26'),(6,8,'tarefa teste 3','2017-12-10','2017-10-26'),(7,2,'tarefa teste 4','2017-11-20','2017-10-26');
+/*!40000 ALTER TABLE `tarefa` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -302,4 +333,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-24 19:57:13
+-- Dump completed on 2017-10-26 12:33:54

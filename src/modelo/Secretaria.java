@@ -1,16 +1,16 @@
 package modelo;
 
-public class MotoBoy extends Funcionario{
+public class Secretaria extends Funcionario{
 
-	int idMotoBoy;
+	int idSecretaria;
 	int idFuncionario;
 	
-	public void setIdMotoBoy(int id){
-		this.idMotoBoy = id;
+	public void setIdSecretaria(int id){
+		this.idSecretaria = id;
 	}
 	
-	public int getIdMotoBoy(){
-		return this.idMotoBoy;
+	public int getIdSecretaria(){
+		return this.idSecretaria;
 	}
 	
 	public void setIdFuncionario(int id) {
