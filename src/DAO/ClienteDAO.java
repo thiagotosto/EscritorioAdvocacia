@@ -35,8 +35,8 @@ public class ClienteDAO {
 		int totalClientes = 1;
 		Cliente[] p1 = new Cliente[1];
 	    try {  	  
-	     	String query = "SELECT * FROM cliente Order by id";
-	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(id)FROM Cliente");
+	     	String query = "SELECT * FROM cliente Order by idcliente";
+	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(idcliente)FROM cliente");
 	       	con.commit();
 	       	if (rs.next()) totalClientes = rs.getInt(1);
 	     	rs = stmt.executeQuery(query);
@@ -131,11 +131,11 @@ public class ClienteDAO {
 	   return c;   
 	}
 	
-	public Cliente consultaPorNome (String nome)
+	public Cliente consultaPorCPF (String cpf)
 	{
 		Cliente c = null;
 	    try {  	  
-	     	String query = "SELECT * FROM cliente WHERE nome = '" + nome + "'";
+	     	String query = "SELECT * FROM cliente WHERE cpf = '" + cpf + "'";
 	       	ResultSet rs = stmt.executeQuery(query);
 	       	con.commit();
 	       	

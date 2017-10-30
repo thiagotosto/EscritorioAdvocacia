@@ -364,7 +364,7 @@ public class ProcessoDAO {
 			
 			// Executa
 			pstm.execute();
-			con.commit();
+			
 			
 			//atualizando documentos
 			
@@ -382,8 +382,29 @@ public class ProcessoDAO {
 
 				//executando
 				pstm.execute();
-				con.commit();
+				
 			}
+			
+			//atualizando clientes
+			for (int i = 0; i < Processo.getClientes().length; i++) {
+				//Monta a string sql
+				sql = "UPDATE processo_cliente SET idcliente = ? where idprocesso = ?";
+				
+				//passa string para o PreparedStatement
+				pstm = con.prepareStatement(sql);
+				
+				//Coloca os verdadeiros valores no lugar dos ?
+				pstm.setInt(1, Processo.getClientes()[i].getId());
+				pstm.setInt(2, Processo.getId());
+				
+				
+
+				//executando
+				pstm.execute();
+			}
+			
+			//comittando trasaction
+			con.commit();
 			
 		 } catch (SQLException e) {
 		// Retorna uma mensagem informando o erro

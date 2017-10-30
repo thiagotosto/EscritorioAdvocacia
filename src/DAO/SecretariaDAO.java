@@ -15,7 +15,7 @@ public class SecretariaDAO extends FuncionarioDAO {
 		Secretaria[] p1 = new Secretaria[1];
 	    try {  	  
 	     	String query = "SELECT * FROM secretaria g INNER JOIN funcionario f ON g.idfuncionario = f.id Order by idsecretaria";
-	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(idSecretaria)FROM Secretaria");
+	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(idSecretaria)FROM secretaria");
 	       	if (rs.next()) totalSecretarias = rs.getInt(1);
 	     	rs = stmt.executeQuery(query);
 	     	con.commit();
@@ -117,9 +117,7 @@ public class SecretariaDAO extends FuncionarioDAO {
 			
 				// Coloca os verdadeiros valores no lugar dos ?
 				pstm.setInt(1, Secretaria.getId());		
-				
-				System.out.println(pstm);
-				
+								
 				// Executa
 				pstm.execute();
 				con.commit();

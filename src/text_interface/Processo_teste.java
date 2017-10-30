@@ -22,9 +22,9 @@ public class Processo_teste {
 		}
 		
 		Processo processo2 = pdao.consultaPorNumero(124);
-		Cliente william = cdao.consultaPorNome("William Marinho Tosto");
+		//Cliente william = cdao.consultaPorNome("William Marinho Tosto");
 		
-		pdao.retirarCliente(processo2, william);
+		//pdao.retirarCliente(processo2, william);
 		
 		//Cliente[] clientes = {cdao.consultaPorNome("William Marinho Tosto"), cdao.consultaPorNome("Marcelo Modolo")};
 		

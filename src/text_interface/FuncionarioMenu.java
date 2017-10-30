@@ -57,6 +57,7 @@ public class FuncionarioMenu {
 				perfil.setSenha(senha1);
 				
 				fdao.atualizar(perfil);
+				break;
 			} else {
 				System.out.println("Senhas não batem!");
 				tentativas += 1;

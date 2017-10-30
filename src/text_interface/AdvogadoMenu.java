@@ -65,34 +65,34 @@ public class AdvogadoMenu {
 	public static void admitirAdvogado(Scanner scan) {
 		
 		//instanciando AdvogadoDAO
-			AdvogadoDAO adao = new AdvogadoDAO();
-			adao.conexaoBD(); // conectando com o banco
-			
-			//instanciando e populando Advogado novo
-			Advogado novoa = new Advogado();
-			
-			//pedindo Nome
-			System.out.print("Nome: ");
-			novoa.setNome(scan.nextLine());
-			
-			//pedindo Matrícula
-			System.out.print("Matricula: ");
-			novoa.setMatricula(scan.nextLine());
-			
-			//pedindo Login
-			System.out.print("Login: ");
-			novoa.setLogin(scan.nextLine());
-			
-			//pedindo Senha
-			System.out.print("Senha: ");
-			novoa.setSenha(scan.nextLine());
-			
-			//pedindo Oab
-			System.out.print("Oab: ");
-			novoa.setOab(scan.nextLine());
-			
-			//persistindo no banco
-			adao.inserir(novoa);
+		AdvogadoDAO adao = new AdvogadoDAO();
+		adao.conexaoBD(); // conectando com o banco
+		
+		//instanciando e populando Advogado novo
+		Advogado novoa = new Advogado();
+		
+		//pedindo Nome
+		System.out.print("Nome: ");
+		novoa.setNome(scan.nextLine());
+		
+		//pedindo Matrícula
+		System.out.print("Matricula: ");
+		novoa.setMatricula(scan.nextLine());
+		
+		//pedindo Login
+		System.out.print("Login: ");
+		novoa.setLogin(scan.nextLine());
+		
+		//pedindo Senha
+		System.out.print("Senha: ");
+		novoa.setSenha(scan.nextLine());
+		
+		//pedindo Oab
+		System.out.print("Oab: ");
+		novoa.setOab(scan.nextLine());
+		
+		//persistindo no banco
+		adao.inserir(novoa);
 	}
 
 	/*

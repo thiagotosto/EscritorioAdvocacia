@@ -14,7 +14,7 @@ public class MotoBoyDAO extends FuncionarioDAO {
 		int totalMotoBoys = 1;
 		MotoBoy[] p1 = new MotoBoy[1];
 	    try {  	  
-	     	String query = "SELECT * FROM MotoBoy g INNER JOIN funcionario f ON g.idfuncionario = f.id Order by idmotoboy";
+	     	String query = "SELECT * FROM motoboy g INNER JOIN funcionario f ON g.idfuncionario = f.id Order by idmotoboy";
 	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(idmotoboy)FROM motoboy");
 	       	if (rs.next()) totalMotoBoys = rs.getInt(1);
 	     	rs = stmt.executeQuery(query);
@@ -117,9 +117,7 @@ public class MotoBoyDAO extends FuncionarioDAO {
 		
 			// Coloca os verdadeiros valores no lugar dos ?
 			pstm.setInt(1, motoboy.getId());		
-			
-			System.out.println(pstm);
-			
+						
 			// Executa
 			 pstm.execute();
 			 con.commit();

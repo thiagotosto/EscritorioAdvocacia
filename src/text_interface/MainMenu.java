@@ -55,6 +55,9 @@ public class MainMenu {
 					System.out.println("Senha ou usuario incorretos!");
 					tentativas += 1;
 				}
+			} else if(tentativas < 3) {
+				System.out.println("Usuario inexistente");
+				tentativas += 1;
 			} else {
 				this.sair(scan);
 			}
@@ -92,7 +95,7 @@ public class MainMenu {
 		System.out.println();
 		
 		//vetor de opções de cargos
-		String[] cargos = {"Advogado"};
+		String[] cargos = {"Advogado", "MotoBoy", "Secretaria"};
 		
 		//menu de cargos
 		for (int i = 0; i < cargos.length; i++) {
@@ -106,6 +109,10 @@ public class MainMenu {
 		//executando opção
 		if (cargos[opcao - 1] == "Advogado") {
 			AdvogadoMenu.admitirAdvogado(scan);
+		} else if (cargos[opcao - 1] == "MotoBoy") {
+			MotoboyMenu.admitirMotoBoy(scan);
+		} else if (cargos[opcao - 1] == "Secretaria") {
+			SecretariaMenu.admitirSecretaria(scan);
 		}
 	}
 	
@@ -116,6 +123,21 @@ public class MainMenu {
 		//listando advogados
 		System.out.println("ADVOGADOS---------------------------------------------------\n");
 		AdvogadoMenu.verTodos();
+		
+		//pulando linha
+		System.out.println();
+		
+		System.out.println("SECRETARIAS ------------------------------------------------\n");
+		SecretariaMenu.verTodos();
+		
+		//pulando linha
+		System.out.println();
+		
+		System.out.println("MOTOBOY ----------------------------------------------------\n");
+		MotoboyMenu.verTodos();
+		
+		
+		
 	}
 	
 	//sair
@@ -137,7 +159,7 @@ public class MainMenu {
 		
 		//montando opções de cada perfil
 		String[] opcoes_funcionario = {"Ver perfil","Consultar tarefas", "Consumir tarefa", "Mudar senha"};
-		String[] opcoes_advogado = {"Consultar processos", "Cadastrar processo", "Deletar processo",  "Consultar Cliente"};
+		String[] opcoes_advogado = {"Consultar processos", "Cadastrar processo", "Deletar processo",  "Consultar Cliente", "Cadastrar Cliente"};
 		String[] opcoes_gerente = {"Ver funcionários","Ver gerentes", "Promover funcionário", "Rebaixar funcionário", "Admitir funcionário",
 				"Demitir funcionário"};
 		String[] sair = {"Sair"};
@@ -201,11 +223,14 @@ public class MainMenu {
 			} else if (opcoes_perfil[opcao - 1] == "Consultar processos") {
 				ProcessoMenu.mostraProcessos(scan, adao.consultaPorLogin(perfil.getLogin()));
 			} else if (opcoes_perfil[opcao - 1] == "Cadastrar processo") {
+				ClienteMenu.mostrarClientes();
 				ProcessoMenu.cadastraProcesso(scan, adao.consultaPorLogin(perfil.getLogin()));
 			} else if (opcoes_perfil[opcao - 1] == "Deletar processo") {
 				ProcessoMenu.deletaProcesso(scan);
 			} else if (opcoes_perfil[opcao - 1] == "Consultar Cliente") {
 				ClienteMenu.consultarClientes(scan, adao.consultaPorLogin(perfil.getLogin()));
+			} else if (opcoes_perfil[opcao - 1] == "Cadastrar Cliente") {
+				ClienteMenu.cadastrarCliente(scan);
 			} else if (opcoes_perfil[opcao - 1] == "Promover funcionário") {
 				GerenteMenu.promoverGerente(scan);
 			} else if (opcoes_perfil[opcao - 1] == "Ver funcionários") {
