@@ -17,6 +17,9 @@
 		String senha = request.getParameter("senha");
 		MainMenuAPI mm = new MainMenuAPI();
 		
+		//descobrindo privilegios
+		mm.descobrePrivilegios(login);
+		
 		if (mm.login(login,senha)){
 			session.setAttribute("perfil_login", mm.getPerfil().getLogin());
 			session.setAttribute("privilegios", mm.getPrivilegios());

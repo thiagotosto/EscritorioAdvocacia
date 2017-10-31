@@ -21,6 +21,7 @@
 		
 		//coletando privilegios
 		String[] privilegios = (String[]) session.getAttribute("privilegios");
+		System.out.println(privilegios);
 		
 		//opções do perfil
 		String[] opcoes_perfil;
@@ -46,11 +47,11 @@
 		out.println("<ul>");
 		
 		
-		for (int i = 0; i < privilegios.length; i++) {
-			out.println("<li>"+ opcoes_perfil[i] +" <\\li>");
+		for (int i = 0; i < opcoes_perfil.length; i++) {
+			out.println("<li>"+ opcoes_perfil[i] +" </li>");
 		}
 		
-		out.println("<\\ul>");
+		out.println("</ul>");
 		%>
 		
 		
