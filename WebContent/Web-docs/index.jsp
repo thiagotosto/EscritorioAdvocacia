@@ -24,9 +24,9 @@
 		<div class="row">
 			<div class="input-field col s12">
 				<%
-					if (session.getValue("validate") == "invalid") {
-						out.println("<input id='senha' type='text' class='invalid' name='senha' type='password' id='senha'>");
-						out.println("<label class='active' for='senha' data-error='Senha errada'>Senha</label>");
+					if (session.getAttribute("validate") == "invalid") {
+						out.println("<input id='senha' class='invalid' name='senha' type='password' id='senha'>");
+						out.println("<label class='active' for='senha'>Senha</label>");
 					} else {
 						out.println("<input name='senha' type='password' id='senha'>");
 						out.println("<label class='active' for='senha'>Senha</label>");

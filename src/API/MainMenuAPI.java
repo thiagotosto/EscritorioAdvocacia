@@ -12,6 +12,14 @@ public class MainMenuAPI {
 	private Funcionario perfil;
 	private String[] privilegios;
 	
+	public String[] getPrivilegios(){
+		return this.privilegios;
+	}
+	
+	public void setPerfil(Funcionario perfil) {
+		this.perfil = perfil;
+	}
+	
 	public Funcionario getPerfil() {
 		return this.perfil;
 	}
