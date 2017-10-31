@@ -82,7 +82,7 @@ public class FuncionarioDAO {
 	}
 	
 	public Funcionario consultaPorLogin (String login)
-	{
+	{		
 		Funcionario p = null;
 	    try {  	  
 	     	String query = "SELECT * FROM funcionario WHERE login = '" + login + "'";

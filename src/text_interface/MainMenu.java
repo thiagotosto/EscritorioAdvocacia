@@ -157,11 +157,16 @@ public class MainMenu {
 		fdao.conexaoBD();
 		adao.conexaoBD();
 		
-		//montando opções de cada perfil
+		//montando opções de cada perfil fase 1!!!
 		String[] opcoes_funcionario = {"Ver perfil","Consultar tarefas", "Consumir tarefa", "Mudar senha"};
 		String[] opcoes_advogado = {"Consultar processos", "Cadastrar processo", "Deletar processo",  "Consultar Cliente", "Cadastrar Cliente"};
-		String[] opcoes_gerente = {"Ver funcionários","Ver gerentes", "Promover funcionário", "Rebaixar funcionário", "Admitir funcionário",
+		String[] opcoes_gerente = {"Excluir cliente", "Ver funcionários","Ver gerentes", "Promover funcionário", "Rebaixar funcionário", "Admitir funcionário",
 				"Demitir funcionário"};
+		
+		//opções fase 2 !!!
+		//String[] opcoes_funcionario = {"Ver perfil", "Mudar senha", "Tarefas"};
+		//String[] opcoes_advogado = {"Processos", "Clientes"};
+		//String[] opcoes_gerente = {"Gerir funcionários", "Ver gerentes"};
 		String[] sair = {"Sair"};
 		
 		//CONSTRUÇÃO
@@ -172,14 +177,14 @@ public class MainMenu {
 		//adicionando opções básicas de funcionarios
 		opcoes_perfil = opcoes_funcionario;
 		
-		//adicionando opções de gerente se for gerente
-		if (privilegios[0] == "Gerente") {
-			opcoes_perfil = Utils.joinArray(opcoes_perfil, opcoes_gerente);
-		}
-		
 		//adicionando opçóes de advogado se for advogado
 		if (privilegios[1] == "Advogado") {
 			opcoes_perfil = Utils.joinArray(opcoes_perfil, opcoes_advogado);
+		}
+		
+		//adicionando opções de gerente se for gerente
+		if (privilegios[0] == "Gerente") {
+			opcoes_perfil = Utils.joinArray(opcoes_perfil, opcoes_gerente);
 		}
 		
 		//adicionando a opçao sair
@@ -206,6 +211,8 @@ public class MainMenu {
 			System.out.print("-> ");
 			int opcao = Integer.parseInt(scan.nextLine());
 			
+			
+			//menu fase 1 !!!
 			//navegando pela opção
 			if (opcoes_perfil[opcao - 1] == "Ver perfil") {
 				if (privilegios[1] == "Advogado") {
@@ -233,6 +240,9 @@ public class MainMenu {
 				ClienteMenu.cadastrarCliente(scan);
 			} else if (opcoes_perfil[opcao - 1] == "Promover funcionário") {
 				GerenteMenu.promoverGerente(scan);
+			} else if (opcoes_perfil[opcao - 1] == "Excluir cliente") {
+				ClienteMenu.mostrarClientes();
+				ClienteMenu.removerCliente(scan);
 			} else if (opcoes_perfil[opcao - 1] == "Ver funcionários") {
 				MainMenu.mostraFuncionarios();
 			} else if (opcoes_perfil[opcao - 1] == "Ver gerentes") {
@@ -246,6 +256,30 @@ public class MainMenu {
 			} else if (opcoes_perfil[opcao - 1] == "Sair") {
 				this.sair(scan);
 			}
+			
+			/*
+			//menu fase 2!!!
+			if (opcoes_perfil[opcao - 1] == "Ver perfil") {
+				if (privilegios[1] == "Advogado") {
+					AdvogadoMenu.verPerfil(adao.consultaPorLogin(this.perfil.getLogin()));
+				} else {
+					FuncionarioMenu.verPerfil(this.perfil);
+				}
+			} else if (opcoes_perfil[opcao - 1] == "Mudar senha") {
+				FuncionarioMenu.mudarSenha(scan, this.perfil);
+			} else if (opcoes_perfil[opcao - 1] == "Tarefas") {
+				TarefaMenu.displayMenu(scan, this.perfil);
+			} else if (opcoes_perfil[opcao - 1] == "Processos") {
+				ProcessoMenu.displayMenu(scan, adao.consultaPorLogin(this.perfil.getLogin()));
+			} else if (opcoes_perfil[opcao - 1] == "Clientes") {
+				ClienteMenu.displayMenu(scan, adao.consultaPorLogin(this.perfil.getLogin()));
+			} else if (opcoes_perfil[opcao - 1] == "Gerir funcionários") {
+				FuncionarioMenu.displayMenu(scan);
+			} else if (opcoes_perfil[opcao - 1] == "Ver gerentes") {
+				GerenteMenu.mostraTodosGerentes(scan);
+			} else if (opcoes_perfil[opcao - 1] == "Sair") {
+				this.sair(scan);
+			}*/
 		}
 	}
 }

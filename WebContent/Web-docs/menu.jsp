@@ -8,12 +8,7 @@
 </head>
 <body>
 <% 
-if(session.getValue("loginUsuario") != null || session.getValue("senhaUsuario") != null)
-{
-   out.println("Você está logado com sucesso no sistema, por isso consegue ver está pagina. Seu login é: " + session.getValue("loginUsuario") + " e sua senha: " + session.getValue("senhaUsuario") + ". Clique <a href='logoff.jsp'>aqui</a> para sair do sistema");
-} else {
-   out.println("Você não está logado no sistema. Clique <a href='index.jsp'>aqui</a> para logar-se");
-}
+
 %>
 <p align="center"><b><font size="4"><u>Exemplo de uso com o JSP</u></font></b>
 <p>&nbsp;</p>

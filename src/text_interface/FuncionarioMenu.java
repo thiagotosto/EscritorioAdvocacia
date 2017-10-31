@@ -3,6 +3,7 @@ package text_interface;
 import java.util.Scanner;
 
 import modelo.Funcionario;
+import modelo.Tarefa;
 import DAO.FuncionarioDAO;
 
 //import java.util.Scanner; 
@@ -52,7 +53,7 @@ public class FuncionarioMenu {
 			System.out.print("Digite a senha novamente: ");
 			String senha2 = scan.nextLine();
 			
-			//testando se senha bate
+			//testando se a senha bate
 			if (senha1.equals(senha2)) {
 				perfil.setSenha(senha1);
 				
@@ -80,6 +81,41 @@ public class FuncionarioMenu {
 			fdao.excluir(usuario);
 		} else {
 			System.out.println("Este funcionário não consta no registro");
+		}
+	}
+	
+	public static void displayMenu(Scanner scan) {
+		String[] opcoes = {"Promover funcionário", "Ver funcionários", "Rebaixar funcionário", "Admitir funcionário", "Demitir funcionário", "Voltar"};
+		
+		
+		while(true) {
+					
+			//cabeçalho
+			System.out.println("\n\nESCOLHA UMA OPÇÃO ABAIXO:\n");
+			
+			//listando opções
+			for (int i = 0; i < opcoes.length; i++){
+				System.out.println(Integer.toString(i+1) + ". " + opcoes[i]);
+			}
+			
+			//entrada de opção do usuário
+			System.out.print("-> ");
+			int opcao = Integer.parseInt(scan.nextLine());
+			
+			//navegando pela opção
+			if (opcoes[opcao - 1] == "Promover funcionário") {
+				GerenteMenu.promoverGerente(scan);
+			} else if (opcoes[opcao - 1] == "Ver funcionários") {
+				MainMenu.mostraFuncionarios();
+			} else if (opcoes[opcao - 1] == "Rebaixar funcionário") {
+				GerenteMenu.despromoverGerente(scan);
+			} else if (opcoes[opcao - 1] == "Admitir funcionário") {
+				MainMenu.admitirFuncionario(scan);
+			} else if (opcoes[opcao - 1] == "Demitir funcionário") {
+				FuncionarioMenu.demitir(scan);
+			} else if (opcoes[opcao - 1] == "Voltar") {
+				break;
+			}
 		}
 	}
 }

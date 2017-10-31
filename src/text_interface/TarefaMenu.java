@@ -79,4 +79,33 @@ public class TarefaMenu {
 		//persistindo no banco
 		tdao.inserir(tarefanova);
 	}
+	
+	public static void displayMenu(Scanner scan, Funcionario perfil){
+		String[] opcoes = {"Consultar tarefas", "Consumir tarefa", "Voltar"};
+		
+		
+		while(true) {
+			//cabeçalho
+			System.out.println("\n\nESCOLHA UMA OPÇÃO ABAIXO:\n");
+			
+			//listando opções
+			for (int i = 0; i < opcoes.length; i++){
+				System.out.println(Integer.toString(i+1) + ". " + opcoes[i]);
+			}
+			
+			//entrada de opção do usuário
+			System.out.print("-> ");
+			int opcao = Integer.parseInt(scan.nextLine());
+			
+			//navegando pela opção
+			if (opcoes[opcao - 1] == "Consultar tarefas") {
+				TarefaMenu.consultarTarefas(scan, perfil);
+			} else if (opcoes[opcao - 1] == "Consumir tarefa") {
+				Tarefa[] tarefas = TarefaMenu.consultarTarefas(scan, perfil);
+				TarefaMenu.consumirTarefa(scan, tarefas);
+			} else if (opcoes[opcao - 1] == "Voltar") {
+				break;
+			}
+		}
+	}
 }

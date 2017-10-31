@@ -3,6 +3,8 @@ package text_interface;
 import modelo.Advogado;
 import modelo.Processo;
 import modelo.Cliente;
+import modelo.Tarefa;
+import DAO.AdvogadoDAO;
 import DAO.ProcessoDAO;
 import DAO.ClienteDAO;
 
@@ -60,9 +62,6 @@ public class ProcessoMenu {
 			clientes[i] = cdao.consultaPorCPF(clientescpf[i]);
 		}
 		
-		
-		
-		
 		//inserindo processo novo
 		pdao.inserir(processo, perfil);
 		pdao.inserirClientes(pdao.consultaPorNumero(processo.getNumero()), clientes);
@@ -78,5 +77,39 @@ public class ProcessoMenu {
 		Processo processo = pdao.consultaPorNumero(Integer.parseInt(scan.nextLine()));
 		
 		pdao.excluir(processo);
+	}
+	
+	public static void displayMenu(Scanner scan, Advogado perfil) {
+		AdvogadoDAO adao = new AdvogadoDAO();
+		adao.conexaoBD();
+		
+		String[] opcoes = {"Consultar processos", "Cadastrar processo", "Deletar processo", "Voltar"};
+		
+		//loop principal
+		while(true){
+			
+			//cabeçalho
+			System.out.println("\n\nESCOLHA UMA OPÇÃO ABAIXO:\n");
+			
+			//listando opções
+			for (int i = 0; i < opcoes.length; i++){
+				System.out.println(Integer.toString(i+1) + ". " + opcoes[i]);
+			}
+			
+			//entrada de opção do usuário
+			System.out.print("-> ");
+			int opcao = Integer.parseInt(scan.nextLine());
+			
+			if (opcoes[opcao - 1] == "Consultar processos") {
+				ProcessoMenu.mostraProcessos(scan, perfil);
+			} else if (opcoes[opcao - 1] == "Cadastrar processo") {
+				ClienteMenu.mostrarClientes();
+				ProcessoMenu.cadastraProcesso(scan, perfil);
+			} else if (opcoes[opcao - 1] == "Deletar processo") {
+				ProcessoMenu.deletaProcesso(scan);
+			} else if (opcoes[opcao - 1] == "Voltar") {
+				break;
+			}
+		}
 	}
 }

@@ -65,7 +65,7 @@ public class ClienteDAO {
 	     	String query = "SELECT * " 
 					 +	   "FROM "
 					 +			"cliente c INNER JOIN  ( "
-					 +				"SELECT idcliente, idadvogado "
+					 +				"SELECT DISTINCT idcliente, idadvogado "
 					 +		        "FROM " 
 					 + 					"processo_cliente pc INNER JOIN processo_advogado pa "
 					 +		        "ON pc.idprocesso = pa.idpeticao "
@@ -78,7 +78,7 @@ public class ClienteDAO {
 	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(c.idcliente) " 
 					 +	   "FROM "
 					 +			"cliente c INNER JOIN  ( "
-					 +				"SELECT idcliente, idadvogado "
+					 +				"SELECT DISTINCT idcliente, idadvogado "
 					 +		        "FROM " 
 					 + 					"processo_cliente pc INNER JOIN processo_advogado pa "
 					 +		        "ON pc.idprocesso = pa.idpeticao "
@@ -214,6 +214,7 @@ public class ClienteDAO {
 			pstm.setString(1, Cliente.getNome());
 			pstm.setString(2, Cliente.getCpf());
 			pstm.setInt(3, Cliente.getId());	
+			
 			// Executa
 			pstm.execute();
 			

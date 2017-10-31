@@ -2,6 +2,7 @@ package text_interface;
 
 import modelo.Advogado;
 import modelo.Cliente;
+import modelo.Funcionario;
 import DAO.AdvogadoDAO;
 import DAO.ClienteDAO;
 
@@ -67,5 +68,50 @@ public class ClienteMenu {
 		
 		//persistindo no banco
 		cdao.inserir(cnovo);
+	}
+	
+	public static void removerCliente(Scanner scan) {
+		//instanciando ClienteDAO e conectando no banco
+		ClienteDAO cdao = new ClienteDAO();
+		cdao.conexaoBD();
+		
+		//pulando linha
+		System.out.println();
+		
+		System.out.print("Digite o CPF do cliente que deseja excluir: ");
+		Cliente clienteremovido = cdao.consultaPorCPF(scan.nextLine());
+		
+		cdao.excluir(clienteremovido);
+	}
+	
+	public static void displayMenu(Scanner scan, Funcionario perfil) {
+		AdvogadoDAO adao = new AdvogadoDAO();
+		adao.conexaoBD();
+		
+		String[] opcoes = {"Consultar Cliente", "Cadastrar Cliente", "Voltar"};
+		
+		//loop principal
+		while(true) {
+		
+			//cabeçalho
+			System.out.println("\n\nESCOLHA UMA OPÇÃO ABAIXO:\n");
+			
+			//listando opções
+			for (int i = 0; i < opcoes.length; i++){
+				System.out.println(Integer.toString(i+1) + ". " + opcoes[i]);
+			}
+			
+			//entrada de opção do usuário
+			System.out.print("-> ");
+			int opcao = Integer.parseInt(scan.nextLine());
+			
+			if (opcoes[opcao - 1] == "Consultar Cliente") {
+				ClienteMenu.consultarClientes(scan, adao.consultaPorLogin(perfil.getLogin()));
+			} else if (opcoes[opcao - 1] == "Cadastrar Cliente") {
+				ClienteMenu.cadastrarCliente(scan);
+			} else if (opcoes[opcao - 1] == "Voltar") {
+				break;
+			}
+		}
 	}
 }

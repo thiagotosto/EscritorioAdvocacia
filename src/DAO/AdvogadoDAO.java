@@ -66,7 +66,7 @@ public class AdvogadoDAO {
 	{
 		Advogado p = null;
 	    try {  	  
-	     	String query = "SELECT * FROM advogado WHERE Id = " + Id;
+	     	String query = "SELECT * FROM advogado WHERE idadvogado = " + Id;
 	       	ResultSet rs = stmt.executeQuery(query);
 	       	if (rs.next()) 
 	   	    {
