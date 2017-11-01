@@ -25,7 +25,7 @@ public class MainMenuAPI {
 	}
 		
 	//login
-	public boolean login(String login, String senha) {
+	public String login(String login, String senha) {
 		
 		//intanciando FuncionarioDAO e fazendo conexão com o banco
 		FuncionarioDAO fdao = new FuncionarioDAO();
@@ -37,12 +37,12 @@ public class MainMenuAPI {
 		if (this.perfil != null){
 			//testando se a senha é a certa
 			if (this.perfil.getSenha().equals(senha)){
-				return true;
+				return "Ok";
 			} else {
-				return false;
+				return "Senha";
 			}
 		} else {
-			return false;
+			return "Usuario";
 		}
 	}
 	
@@ -72,6 +72,25 @@ public class MainMenuAPI {
 		this.privilegios = privilegios;
 	}
 	
+	public static String descobreOcupacao(String usuario) {
+		//instanciando DAOS e conectando no banco
+		AdvogadoDAO adao = new AdvogadoDAO();
+		MotoBoyDAO mdao = new MotoBoyDAO();
+		SecretariaDAO sdao = new SecretariaDAO();
+		adao.conexaoBD();
+		mdao.conexaoBD();
+		sdao.conexaoBD();
+		
+		if (adao.consultaPorLogin(usuario) != null) {
+			return "Advogado";
+		} else if (mdao.consultaPorLogin(usuario) != null) {
+			return "MotoBoy";
+		} else if (sdao.consultaPorLogin(usuario) != null) {
+			return "Secretaria";
+		} else {
+			return null;
+		}
+	}
 	/*
 	public static void mostraFuncionarios() {
 		//pulando linha

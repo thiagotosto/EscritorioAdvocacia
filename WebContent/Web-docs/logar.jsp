@@ -17,17 +17,24 @@
 		String senha = request.getParameter("senha");
 		MainMenuAPI mm = new MainMenuAPI();
 		
-		//descobrindo privilegios
-		mm.descobrePrivilegios(login);
 		
-		if (mm.login(login,senha)){
+		
+		if (mm.login(login,senha) == "Ok"){
+			
+			//descobrindo privilegios
+			mm.descobrePrivilegios(login);
+			
 			session.setAttribute("perfil_login", mm.getPerfil().getLogin());
 			session.setAttribute("privilegios", mm.getPrivilegios());
 			out.println("<script>document.location.href='menu.jsp';</script>");
-		} else {
-			session.setAttribute("validate", "invalid");
+		
+		} else if (mm.login(login,senha) == "Usuario") {
+			session.setAttribute("validate-usuario", "invalid");
 			out.println("<script>document.location.href='index.jsp';</script>");
-		}	
+		} else if (mm.login(login,senha) == "Senha") {
+			session.setAttribute("validate-senha", "invalid");
+			out.println("<script>document.location.href='index.jsp';</script>");
+		}
 			
 		%>
 	</body>

@@ -10,7 +10,7 @@
 <%
 //Destroi as sessions
 session.invalidate();
-out.println("Você saiu com sucesso do sistema. Tente ver agora a página dos \"<a href='menu.jsp'>logados</a>\" ou efetue novamente <a href='index.jsp'>login</a>");
+out.println("<script>document.location.href='index.jsp';</script>");
 %>
 </body>
 </html>
