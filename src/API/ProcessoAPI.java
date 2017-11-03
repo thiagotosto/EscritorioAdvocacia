@@ -15,6 +15,10 @@ public class ProcessoAPI {
 		//carregando todos os processos
 		Processo[] processos = pdao.consultaTodos(perfil);
 		
+		for (int i = 0; i < processos.length; i++) {
+			processos[i] = pdao.consultaPorNumero(processos[i].getNumero());
+		}
+		
 		return processos;
 	}
 	

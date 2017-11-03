@@ -39,7 +39,7 @@
 		<div class="container">
 			<% 
 			//opções do menu
-			String[] opcoes_funcionario = {"Ver perfil", "Mudar senha", "Tarefas"};
+			String[] opcoes_funcionario = {"Ver perfil", "Alterar senha", "Tarefas"};
 			String[] opcoes_advogado = {"Processos", "Clientes"};
 			String[] opcoes_gerente = {"Gerir funcionários", "Ver gerentes"};	
 		
@@ -84,7 +84,7 @@
 					out.println("<li><div class='collapsible-header'><i class='material-icons'>face</i>" + opcoes_perfil[i] + "</div>");
 					out.println("<div class='collapsible-body'><span><p>"+ perfil.getNome() +"</p><br><p>Cargo: "+ ocupacao +"</p><p>Login: "+ perfil.getLogin() +"</p><p>Matricula: "+ perfil.getMatricula() +"</p></span></div></li>");
 				
-				} else if (opcoes_perfil[i] == "Mudar senha") { //MUDAR SENHA!!!!
+				} else if (opcoes_perfil[i] == "Alterar senha") { //MUDAR SENHA!!!!
 				
 					//header
 					out.println("<li><div class='collapsible-header'><i class='material-icons'>vpn_key</i>" + opcoes_perfil[i] + "</div>");
@@ -105,7 +105,7 @@
 							out.println("<label for='password2'>Repita senha</label>");
 						out.println("</div>");
 									
-						out.println("<button class='btn waves-effect waves-light' type='submit' name='action'>submeter ");
+						out.println("<button class='btn waves-effect waves-light' type='submit' name='action'>alterar ");
 					    		out.println("<i class='material-icons' right>send</i>");
 					  	out.println("</button>");
 									
@@ -116,7 +116,7 @@
 					out.println("<div class='collapsible-body'><span>"
 					+  	"<div class='collection'>"
 			        +		"<a href='consultar_tarefa.jsp' class='collection-item'>Consultar tarefa</a>"
-			        +		"<a href='#!' class='collection-item'>Consumir tarefa</a>"
+			        +		"<a href='#!' class='collection-item'>Criar tarefa</a>"
 			      	+	"</div>"
 
 					+ "</span></div></li>");
@@ -125,8 +125,8 @@
 					out.println("<li><div class='collapsible-header'><i class='material-icons'>description</i>" + opcoes_perfil[i] + "</div>");
 					out.println("<div class='collapsible-body'><span>"
 					+  	"<div class='collection'>"
-					+		"<a href='#!' class='collection-item'>Consultar processo</a>"
-					+		"<a href='#!' class='collection-item'>Cadastrar processo</a>"
+					+		"<a href='consultar_processos.jsp' class='collection-item'>Consultar processo</a>"
+					+		"<a href='cadastrar_processo.jsp' class='collection-item'>Cadastrar processo</a>"
 					+		"<a href='#!' class='collection-item'>Deletar processo</a>"
 				  	+	"</div>"
 

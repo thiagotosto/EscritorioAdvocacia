@@ -7,9 +7,9 @@
 <%@ page import="utils.*" %>   
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>	
+	<head>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-		<link rel="stylesheet" type="text/css" href="../materialize/css/style.css">
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Escritorio de Advocacia</title>
@@ -37,30 +37,21 @@
 		</nav>
 		
 		<div class="container">
-			<% 
-				Tarefa[] tarefas = TarefaAPI.consultarTarefas(perfil);
-				
-				out.println("<ul class='collapsible' data-collapsible='accordion'>");
+			<% 			
+			//intanciando ProcessoDAO e conectando ao banco
+			ProcessoDAO pdao = new ProcessoDAO();
+			pdao.conexaoBD();
 			
-				for (int i = 0; i < tarefas.length; i++) {
-					out.println("<li>"
-				    +			  	"<div class='collapsible-header'><i class='material-icons'>event</i>"+ tarefas[i].getDescricao() +"</div>"
-				    +  				"<div class='collapsible-body'><span><p>Data de Expiração: "+ tarefas[i].getExprData() +"</p><br><p>Data de Expedição: "+ tarefas[i].getExpdData() +"</p></span></div>"
-				    +				"<div class='collapsible-body'><span>"
-				    +					"<form id='consumir-tarefa' action='consumir_tarefa.jsp'>"
-				    +						"<input id='tarefa' name='tarefa' type='hidden' value='"+ tarefas[i].getId() +"'>"
-				    +						"<a class='teal-text lighten-1' href='javascript:{}' onclick=\"document.getElementById('consumir-tarefa').submit();\"I><i class='material-icons'>done</i></a>"
-				    +					"</form>"
-				    +				"</span></div>"
-				    + 			"</li>");
-				}
-			
-				out.println("</ul>");
+			Processo processo = new Processo();
+			processo.setNumero(Integer.parseInt(request.getParameter("numero")));
+			processo.setDescricao(request.getParameter("descricao"));
+			System.out.println("TESTE SELECT: "+request.getParameter("select"));
+		
 			%>
-          
+			
+			out.println("<script>document.location.href='consultar_processos.jsp'</script>");
 		</div>	
 		<!--  Scripts-->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="../materialize/js/materialize.js"></script>
 	</body>

@@ -24,10 +24,10 @@
 		      	<ul id="nav-mobile" class="right hide-on-med-and-down">
 		        	<%
 			    		//instanciando FuncionarioDAO e conectando no banco
-						FuncionarioDAO fdao = new FuncionarioDAO();
-						fdao.conexaoBD();
+						AdvogadoDAO adao = new AdvogadoDAO();
+						adao.conexaoBD();
 		        	
-						Funcionario perfil = fdao.consultaPorLogin((String) session.getAttribute("perfil_login"));
+						Advogado perfil = adao.consultaPorLogin((String) session.getAttribute("perfil_login"));
 						
 		        		out.println("<li>"+ perfil.getNome() +"</li>");
 		        	%>
@@ -38,18 +38,27 @@
 		
 		<div class="container">
 			<% 
-				Tarefa[] tarefas = TarefaAPI.consultarTarefas(perfil);
+				Processo[] processos = ProcessoAPI.mostraProcessos(perfil);
 				
 				out.println("<ul class='collapsible' data-collapsible='accordion'>");
 			
-				for (int i = 0; i < tarefas.length; i++) {
+				for (int i = 0; i < processos.length; i++) {
 					out.println("<li>"
-				    +			  	"<div class='collapsible-header'><i class='material-icons'>event</i>"+ tarefas[i].getDescricao() +"</div>"
-				    +  				"<div class='collapsible-body'><span><p>Data de Expiração: "+ tarefas[i].getExprData() +"</p><br><p>Data de Expedição: "+ tarefas[i].getExpdData() +"</p></span></div>"
-				    +				"<div class='collapsible-body'><span>"
-				    +					"<form id='consumir-tarefa' action='consumir_tarefa.jsp'>"
-				    +						"<input id='tarefa' name='tarefa' type='hidden' value='"+ tarefas[i].getId() +"'>"
-				    +						"<a class='teal-text lighten-1' href='javascript:{}' onclick=\"document.getElementById('consumir-tarefa').submit();\"I><i class='material-icons'>done</i></a>"
+				    +			  	"<div class='collapsible-header'><i class='material-icons'>description</i>"+ processos[i].getDescricao() +"</div>"
+				    +  				"<div class='collapsible-body'><span><p>Numero: "+ processos[i].getNumero() +"</p>"
+				    +				"<br><p>Clientes: ");
+				    for (int j = 0; j < processos[i].getClientes().length; j++) {
+				    	if (j < processos[i].getClientes().length - 1) {
+				    		out.println(processos[i].getClientes()[j].getNome() + ", ");
+				    	} else {
+				    		out.println(processos[i].getClientes()[j].getNome() + "</p>");
+				    	}
+					}		    
+				    out.println(		"</span></div>"
+				    +					"<div class='collapsible-body'><span>"
+				    +					"<form id='consultar-documentos' action='consultar_documentos.jsp'>"
+				    +						"<input id='processo' name='processo' type='hidden' value='"+ processos[i].getNumero() +"'>"
+				    +						"<a class='teal-text lighten-1' href='javascript:{}' onclick=\"document.getElementById('consultar-documentos').submit();\"I><i class='material-icons'>folder</i></a>"
 				    +					"</form>"
 				    +				"</span></div>"
 				    + 			"</li>");

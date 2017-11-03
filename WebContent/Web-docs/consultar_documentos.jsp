@@ -7,9 +7,9 @@
 <%@ page import="utils.*" %>   
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>	
+	<head>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-		<link rel="stylesheet" type="text/css" href="../materialize/css/style.css">
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Escritorio de Advocacia</title>
@@ -37,30 +37,33 @@
 		</nav>
 		
 		<div class="container">
-			<% 
-				Tarefa[] tarefas = TarefaAPI.consultarTarefas(perfil);
-				
-				out.println("<ul class='collapsible' data-collapsible='accordion'>");
+			<% 			
+			//instanciando ProcessoDAO e conectando no banco
+			ProcessoDAO pdao = new ProcessoDAO();
+			pdao.conexaoBD();
 			
-				for (int i = 0; i < tarefas.length; i++) {
-					out.println("<li>"
-				    +			  	"<div class='collapsible-header'><i class='material-icons'>event</i>"+ tarefas[i].getDescricao() +"</div>"
-				    +  				"<div class='collapsible-body'><span><p>Data de Expiração: "+ tarefas[i].getExprData() +"</p><br><p>Data de Expedição: "+ tarefas[i].getExpdData() +"</p></span></div>"
-				    +				"<div class='collapsible-body'><span>"
-				    +					"<form id='consumir-tarefa' action='consumir_tarefa.jsp'>"
-				    +						"<input id='tarefa' name='tarefa' type='hidden' value='"+ tarefas[i].getId() +"'>"
-				    +						"<a class='teal-text lighten-1' href='javascript:{}' onclick=\"document.getElementById('consumir-tarefa').submit();\"I><i class='material-icons'>done</i></a>"
-				    +					"</form>"
-				    +				"</span></div>"
-				    + 			"</li>");
-				}
+			System.out.println(request.getParameter("processo"));
 			
-				out.println("</ul>");
+			//trazendo caminho de documentos
+			String[][] documentos = pdao.consultaPorNumero(Integer.parseInt(request.getParameter("processo"))).getDocumentos();
+			
+			//printando header da colletion
+			out.println("<p>&nbsp;</p><h4 id='documentos-header' class='teal-text lighten-1'>Documentos</h4>"
+			+			"<style> #documentos-header{margin-bottom: 15px;}</style>"
+			+			"<div class='collection with-header'>");
+			
+			for (int i = 0; i < documentos.length; i++) {
+				out.println("<a class='collection-item' href='"+ documentos[i][1] +"'>"+ documentos[i][2] +"</a>");
+			}
+			
+			out.println("</div>");
+			 
+		        
+		
 			%>
-          
+			
 		</div>	
 		<!--  Scripts-->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="../materialize/js/materialize.js"></script>
 	</body>
