@@ -9,7 +9,6 @@
 <html>
 	<head>	
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-		<link rel="stylesheet" type="text/css" href="/Escritorio Advocacia/WebContent/materialize/css/materialize.css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Escritorio de Advocacia</title>
@@ -51,50 +50,67 @@
 			<ul class="collapsible" data-collapsible="expandable">
 				<%				
 					out.println("<li>"
+				+		"<!-- ADVOGADOS -->"
 				+		"<div class='collapsible-header'><i class='material-icons'>filter_drama</i>Advogados</div>"
 				+		"<div class='collapsible-body'><span>"
-				+			"<ul class='collection'");
+				+			"<ul class='collection'>");
 					//cada advogado
 					for (int i = 0; i < advogados.length; i++) {	
-						out.println("<li class='collection-item avatar'"
+						out.println("<li class='collection-item avatar'>"
 								+		"<span class='title'>"+ advogados[i].getNome() +"</span>"
 								+		"<p>" + advogados[i].getLogin()
 								+ 		"<br>"+ advogados[i].getMatricula() +"</p>"
 								+		"<a href='' onclick='' class='secondary-content'><i class='material-icons'>group_add</i></a>"
 								+	"</li>");
 					}
-					
+					out.println("</ul>"
+					+		"</span></div>"
+					+	"</li>");
+				
+				out.println("<li>"
+				+		"<!-- MOTOBOYS -->"
+				+		"<div class='collapsible-header'><i class='material-icons'>filter_drama</i>Motoboys</div>"
+				+		"<div class='collapsible-body'><span>"
+				+			"<ul class='collection'>");
 					//cada motoboy
 					for (int i = 0; i < motoboys.length; i++) {	
-						out.println("<li class='collection-item avatar'"
+						out.println("<li class='collection-item avatar'>"
 								+		"<span class='title'>"+ motoboys[i].getNome() +"</span>"
 								+		"<p>" + motoboys[i].getLogin()  
 								+ 		"<br>"+ motoboys[i].getMatricula() +"</p>"
 								+		"<a href='' onclick='' class='secondary-content'><i class='material-icons'>group_add</i></a>"
 								+	"</li>");
 					}
+					out.println("</ul>"
+					+		"</span></div>"
+					+	"</li>");
 					
+				
+				out.println("<li>"
+						+		"<!-- SECRETARIAS -->"
+						+		"<div class='collapsible-header'><i class='material-icons'>filter_drama</i>Secretarias</div>"
+						+		"<div class='collapsible-body'><span>"
+						+			"<ul class='collection'>");
 					//cada secretaria
 					for (int i = 0; i < secretarias.length; i++) {	
-						out.println("<li class='collection-item avatar'"
+						out.println("<li class='collection-item avatar'>"
 								+		"<span class='title'>"+ secretarias[i].getNome() +"</span>"
 								+		"<p>" + secretarias[i].getLogin()
 								+		"<br>"+ secretarias[i].getMatricula() +"</p>"
-								+		"<a href='' onclick='' class='secondary-content'><i class='material-icons'>group_add</i></a>"+		"<a href='' onclick='' class='secondary-content'><i class='material-icons'>grade</i></a>"
+								+		"<a href='' onclick='' class='secondary-content'><i class='material-icons'>group_add</i></a>"
 								+	"</li>");
 					}
-						//fechando collection
-						out.println("</ul>"	
-				+	"</span></div>"
-				+	"</li>");
+					out.println("</ul>"
+					+		"</span></div>"
+					+	"</li>");
+				
 				 %>
 				
 			</ul> <!-- fechando collapsible -->
           
 		</div>	
 		<!--  Scripts-->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-		<script src="../materialize/js/materialize.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	</body>
 </html>
