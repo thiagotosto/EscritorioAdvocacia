@@ -41,12 +41,29 @@
 			//intanciando ProcessoDAO e conectando ao banco
 			ProcessoDAO pdao = new ProcessoDAO();
 			pdao.conexaoBD();
+			ClienteDAO cdao = new ClienteDAO();
+			cdao.conexaoBD();
+			AdvogadoDAO adao = new AdvogadoDAO();
+			adao.conexaoBD();
 			
+			//criando e populando novo processo
 			Processo processo = new Processo();
 			processo.setNumero(Integer.parseInt(request.getParameter("numero")));
 			processo.setDescricao(request.getParameter("descricao"));
-			System.out.println("TESTE SELECT: "+request.getParameter("select"));
-		
+			//coletando ids dos clientes selecionados
+			String[] clienteIds = request.getParameterValues("select");
+			Cliente[] clientes = new Cliente[clienteIds.length];
+			
+			//coletando clientes relacionados aos ids
+			for (int i = 0; i < clienteIds.length; i++) {
+				clientes[i] = cdao.consultaPorId(Integer.parseInt(clienteIds[i]));
+			}
+			
+			//setando clientes enfim
+			processo.setClientes(clientes);
+			
+			ProcessoAPI.cadastraProcesso(adao.consultaPorLogin((String)session.getAttribute("perfil_login")), processo);
+			
 			%>
 			
 			out.println("<script>document.location.href='consultar_processos.jsp'</script>");
