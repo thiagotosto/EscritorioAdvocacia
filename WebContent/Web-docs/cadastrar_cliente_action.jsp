@@ -37,32 +37,23 @@
 		</nav>
 		
 		<div class="container">
-			
 			<% 			
-			//instanciando ProcessoDAO e conectando no banco
-			ProcessoDAO pdao = new ProcessoDAO();
-			pdao.conexaoBD();
+			//intanciando ClienteDAO e conectando ao banco
+			ClienteDAO cdao = new ClienteDAO();
+			cdao.conexaoBD();
+			AdvogadoDAO adao = new AdvogadoDAO();
+			adao.conexaoBD();
 			
-			System.out.println(request.getParameter("processo"));
+			//criando e populando novo processo
+			Cliente cliente = new Cliente();
+			cliente.setNome(request.getParameter("nome"));
+			cliente.setCpf(request.getParameter("cpf"));
+						
+			ClienteAPI.cadastrarCliente(cliente);
 			
-			//trazendo caminho de documentos
-			String[][] documentos = pdao.consultaPorNumero(Integer.parseInt(request.getParameter("processo"))).getDocumentos();
-			
-			//printando header da colletion
-			out.println("<p>&nbsp;</p><h4 id='documentos-header' class='teal-text lighten-1'>Documentos</h4>"
-			+			"<style> #documentos-header{margin-bottom: 15px;}</style>"
-			+			"<div class='collection with-header'>");
-			
-			for (int i = 0; i < documentos.length; i++) {
-				out.println("<a class='collection-item' href='"+ documentos[i][1] +"'>"+ documentos[i][2] +"</a>");
-			}
-			
-			out.println("</div>");
-			 
-		        
-		
 			%>
 			
+			out.println("<script>document.location.href='consultar_cliente.jsp'</script>");
 		</div>	
 		<!--  Scripts-->
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

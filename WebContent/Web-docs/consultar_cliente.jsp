@@ -38,37 +38,29 @@
 		
 		<div class="container">
 			<p>&nbsp;</p>
-			<h4 class="teal-text lighten-1">Processos</h4>
+			<h4 class="teal-text lighten-1">Clientes</h4>
 			<% 
-				Processo[] processos = ProcessoAPI.mostraProcessos(perfil);
+				Cliente[] clientes = ClienteAPI.mostrarClientes();
 				
 				out.println("<ul class='collapsible' data-collapsible='accordion'>");
 			
-				for (int i = 0; i < processos.length; i++) {
+				for (int i = 0; i < clientes.length; i++) {
 					out.println("<li>"
-				    +			  	"<div class='collapsible-header'><i class='material-icons'>description</i>"+ processos[i].getDescricao() +"</div>"
-				    +  				"<div class='collapsible-body'><span><p>Numero: "+ processos[i].getNumero() +"</p>"
-				    +				"<br><p>Clientes: ");
-				    for (int j = 0; j < processos[i].getClientes().length; j++) {
-				    	if (j < processos[i].getClientes().length - 1) {
-				    		out.println(processos[i].getClientes()[j].getNome() + ", ");
-				    	} else {
-				    		out.println(processos[i].getClientes()[j].getNome() + "</p>");
-				    	}
-					}		    
+				    +			  	"<div class='collapsible-header'><i class='material-icons'>person</i>"+ clientes[i].getNome() +"</div>"
+				    +  				"<div class='collapsible-body'><span><p>Cpf: "+ clientes[i].getCpf() +"</p>");
 				    out.println(		"</span></div>"
 				    +					"<div class='collapsible-body'><span>"
 				    +					"<div class='row'>"
 					+						"<div class='col s1'>"						
-				    +							"<form id='consultar-documentos"+ processos[i].getNumero() +"' action='consultar_documentos.jsp'>"
-					+								"<input id='processo' name='processo' type='hidden' value='"+ processos[i].getNumero() +"'>"
-					+								"<a style='display:block;width:10px;' class='teal-text lighten-1' href='javascript:{}' onclick=\"document.getElementById('consultar-documentos"+ processos[i].getNumero() +"').submit();\"><i class='material-icons'>folder</i></a>"
+				    +							"<form id='editar-cliente"+ clientes[i].getCpf() +"' action='edita_cliente.jsp'>"
+					+								"<input id='cliente' name='cliente' type='hidden' value='"+ clientes[i].getCpf() +"'>"
+					+								"<a class='teal-text lighten-1' href='javascript:{}' onclick=\"document.getElementById('editar-cliente"+ clientes[i].getCpf() +"').submit();\"><i class='material-icons'>edit</i></a>"
 					+							"</form>"
 					+						"</div>"
 					+						"<div class='col s11'>"
-					+							"<form id='deletar-processo"+ processos[i].getNumero() +"' action='deleta_processo.jsp'>"
-					+								"<input id='processo-deletado' name='processo-deletado' type='hidden' value='"+ processos[i].getNumero() +"'>"
-					+								"<a style='display:block;width:10px;' class='teal-text lighten-1' href='javascript:{}' onclick=\"document.getElementById('deletar-processo"+ processos[i].getNumero() +"').submit();\"><i class='material-icons'>delete</i></a>"
+					+							"<form id='deletar-cliente"+ clientes[i].getCpf() +"' action='deleta_cliente.jsp'>"
+					+								"<input id='cliente-deletado' name='cliente-deletado' type='hidden' value='"+ clientes[i].getCpf() +"'>"
+					+								"<a class='teal-text lighten-1' href='javascript:{}' onclick=\"document.getElementById('deletar-cliente"+ clientes[i].getCpf() +"').submit();\"><i class='material-icons'>delete</i></a>"
 					+							"</form>"
 					+						"</div>"
 					+					"</div>"

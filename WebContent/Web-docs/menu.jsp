@@ -127,7 +127,6 @@
 					+  	"<div class='collection'>"
 					+		"<a href='consultar_processos.jsp' class='collection-item'>Consultar processo</a>"
 					+		"<a href='cadastrar_processo.jsp' class='collection-item'>Cadastrar processo</a>"
-					+		"<a href='#!' class='collection-item'>Deletar processo</a>"
 				  	+	"</div>"
 
 					
@@ -136,8 +135,9 @@
 					out.println("<li><div class='collapsible-header'><i class='material-icons'>people</i>" + opcoes_perfil[i] + "</div>");
 					out.println("<div class='collapsible-body'><span>"
 					+  	"<div class='collection'>"
-					+		"<a href='#!' class='collection-item'>Consultar cliente</a>"
-					+		"<a href='#!' class='collection-item'>Cadastrar cliente</a>"
+					+		"<a href='consultar_cliente.jsp' class='collection-item'>Consultar clientes</a>"
+					+		"<a href='consultar_meus_clientes.jsp' class='collection-item'>Consultar meus clientes</a>"
+					+		"<a href='cadastrar_cliente.jsp' class='collection-item'>Cadastrar cliente</a>"
 					+	"</div>"
 					
 					+	"</span></div></li>");
@@ -145,7 +145,7 @@
 					out.println("<li><div class='collapsible-header'><i class='material-icons'>group_work</i>" + opcoes_perfil[i] + "</div>");
 					out.println("<div class='collapsible-body'><span>"
 							+  	"<div class='collection'>"
-							+		"<a href='#!' class='collection-item'>Promover funcionário</a>"
+							+		"<a href='promover_funcionario.jsp' class='collection-item'>Promover funcionário</a>"
 							+		"<a href='#!' class='collection-item'>Rebaixar funcionário</a>"
 							+		"<a href='#!' class='collection-item'>Admitir funcionário</a>"
 							+		"<a href='#!' class='collection-item'>Demitir funcionário</a>"

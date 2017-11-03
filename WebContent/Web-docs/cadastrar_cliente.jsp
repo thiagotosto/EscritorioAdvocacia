@@ -40,42 +40,24 @@
 		
 		<div class="container">
 			<p>&nbsp;</p>
-			<h4 class="teal-text lighten-1">Novo processo</h4>
-			<% 
-				Processo[] processos = ProcessoAPI.mostraProcessos(perfil);
-			
+			<h4 class="teal-text lighten-1">Novo cliente</h4>
+			<% 			
 				out.println("<div class='row'>"
-				+		"<form class='col s12' action='cadastrar_processo_action.jsp'>"
+				+		"<form class='col s12' action='cadastrar_cliente_action.jsp'>"
 				+	    	"<div id='div-pai' class='row'>"
 				+	      		"<div class='input-field col s12'>"
-				+	        		"<input  id='numero' name='numero' type='text'>"
-				+	        		"<label for='numero'>Numero</label>"
+				+	        		"<input  id='nome' name='nome' type='text'>"
+				+	        		"<label for='numero'>Nome</label>"
 				+	        	"</div>"
 				+			"</div>"
 				+			"<div class='row'>"
 				+	        	"<div class='input-field col s12'>"
-				+	          		"<input id='descricao' name='descricao' type='text'>"
-				+	          		"<label for='descricao'>Descrição</label>"
+				+	          		"<input id='cpf' name='cpf' type='text'>"
+				+	          		"<label for='descricao'>Cpf</label>"
 				+	        	"</div>"
 				+	      	"</div>");
           	%>
 				
-					      	<div class="input-field col s12">
-							    <select multiple id="select" name="select">
-							      <%
-							      	ClienteDAO cdao = new ClienteDAO();
-							      	cdao.conexaoBD();
-					          		
-					          				
-					          		Cliente[] clientes = cdao.consultaTodos();		
-							      	
-					          		for (int i = 0; i < clientes.length; i++) {
-					          			out.println("<option value='"+ clientes[i].getId() +"'>"+ clientes[i].getNome() +"</option>");
-					          		}
-							      %>
-							    </select>
-							    <label>Clientes</label>
-							  </div>
 							  <button class="btn waves-effect waves-light" type="submit" name="action">Adicionar
 	    							<i class="material-icons right">send</i>
 	  						  </button>
@@ -87,7 +69,6 @@
 		
 		<script type="text/javascript">
 			$(document).ready(function() {
-				console.log("READY");
 			    $('select').material_select();
 			});
 			

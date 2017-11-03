@@ -1,6 +1,7 @@
 package API;
 
 import modelo.Funcionario;
+import modelo.Advogado;
 import modelo.Cliente;
 import DAO.AdvogadoDAO;
 import DAO.ClienteDAO;
@@ -17,16 +18,13 @@ public class ClienteAPI {
 		
 	}
 	
-	public static Cliente[] consultarClientes(Funcionario perfil) {
+	public static Cliente[] consultarClientes(Advogado perfil) {
 		//instanciando ClienteDAO e conectando no banco
 		ClienteDAO cdao = new ClienteDAO();
-		cdao.conexaoBD();
-		
-		AdvogadoDAO adao = new AdvogadoDAO();
-		adao.conexaoBD();		
+		cdao.conexaoBD();		
 				
 		//trazendo os clientes vinculados à esse perfil
-		Cliente[] clientes = cdao.consultaTodos(adao.consultaPorLogin(perfil.getLogin()));
+		Cliente[] clientes = cdao.consultaTodos(perfil);
 		
 		return clientes;
 	}
