@@ -41,47 +41,157 @@
 		<div class="container">
 			<p>&nbsp;</p>
 			<h4 class="teal-text lighten-1">Novo funcionario</h4>
-			<% 
-				Processo[] processos = ProcessoAPI.mostraProcessos(perfil);
 			
-				out.println("<div class='row'>"
-				+		"<form class='col s12' action='cadastrar_processo_action.jsp'>"
-				+	    	"<div id='div-pai' class='row'>"
-				+	      		"<div class='input-field col s12'>"
-				+	        		"<input  id='nome' name='nome' type='text'>"
-				+	        		"<label for='nome'>Nome</label>"
-				+	        	"</div>"
-				+			"</div>"
-				+			"<div class='row'>"
-				+	        	"<div class='input-field col s12'>"
-				+	          		"<input id='descricao' name='descricao' type='text'>"
-				+	          		"<label for='descricao'>Descrição</label>"
-				+	        	"</div>"
-				+	      	"</div>");
-          	%>
+			<div class="row">
+			    <div class="col s12">
+			    	<ul class="tabs">
+				    	<li class="tab col s3 teal-text lighten-1"><a style="color:#26a69a;" class="active" href="#advogadoTab">Advogado</a></li>
+				    	<li class="tab col s3 teal-text lighten-1"><a style="color:#26a69a;" href="#motoboyTab">Motoboy</a></li>
+				    	<li class="tab col s3 teal-text lighten-1"><a style="color:#26a69a;" href="#secretariaTab">Secretaria</a></li>
+			    	</ul>
+			    </div>
+			    
+			    <style>
+			    	.tabs .indicator {
+			    		background-color: #26a69a;
+			    	}
+			    </style>
+			    
+			    <div id="advogadoTab" class="col s12"> <!-- TAB DE ADVOGADO -->
+			    
+			    	<% 
+					Processo[] processos = ProcessoAPI.mostraProcessos(perfil);
 				
-					      	<div class="input-field col s12">
-							    <select multiple id="select" name="select">
-							      <%
-							      	ClienteDAO cdao = new ClienteDAO();
-							      	cdao.conexaoBD();
-					          		
-					          				
-					          		Cliente[] clientes = cdao.consultaTodos();		
-							      	
-					          		for (int i = 0; i < clientes.length; i++) {
-					          			out.println("<option value='"+ clientes[i].getId() +"'>"+ clientes[i].getNome() +"</option>");
-					          		}
-							      %>
-							    </select>
-							    <label>Clientes</label>
-							  </div>
+					out.println("<div class='row'>"
+					+		"<p>&nbsp;</p>"
+					+		"<form class='col s12' action='admitir_funcionario_action.jsp'>"
+					+			"<input name='cargo' type='hidden' value='advogado'>"
+					+	    	"<div id='div-pai' class='row'>"
+					+	      		"<div class='input-field col s12'>"
+					+	        		"<input  id='nome' name='nome' type='text'>"
+					+	        		"<label for='nome'>Nome</label>"
+					+	        	"</div>"
+					+			"</div>"
+					+			"<div class='row'>"
+					+	        	"<div class='input-field col s12'>"
+					+	          		"<input id='oab' name='oab' type='text'>"
+					+	          		"<label for='descricao'>Oab</label>"
+					+	        	"</div>"
+					+	      	"</div>"
+					+			"<div class='row'>"
+					+	        	"<div class='input-field col s12'>"
+					+	          		"<input id='login' name='login' type='text'>"
+					+	          		"<label for='descricao'>Login</label>"
+					+	        	"</div>"
+					+	      	"</div>"
+					+			"<div class='row'>"
+					+	        	"<div class='input-field col s12'>"
+					+	          		"<input id='senha' name='senha' type='password'>"
+					+	          		"<label for='descricao'>Senha</label>"
+					+	        	"</div>"
+					+	      	"</div>"
+					+			"<div class='row'>"
+					+	        	"<div class='input-field col s12'>"
+					+	          		"<input id='senha-confirm' name='senha-confirm' type='password'>"
+					+	          		"<label for='descricao'>Repita senha</label>"
+					+	        	"</div>"
+					+	      	"</div>");
+	          	%>
+					
+						  
 							  <button class="btn waves-effect waves-light" type="submit" name="action">Adicionar
 	    							<i class="material-icons right">send</i>
 	  						  </button>
-				</form>
-			</div>
-			
+  						  
+						</form>
+			    	</div>
+			    </div>
+			    <div id="motoboyTab" class="col s12"> <!-- MOTOBOY TAB -->
+			    	
+				    <% 				
+						out.println("<div class='row'>"
+						+		"<p>&nbsp;</p>"
+						+		"<form class='col s12' action='admitir_funcionario_action.jsp'>"
+						+			"<input name='cargo' type='hidden' value='motoboy'>"		
+						+	    	"<div id='div-pai' class='row'>"
+						+	      		"<div class='input-field col s12'>"
+						+	        		"<input  id='nome' name='nome' type='text'>"
+						+	        		"<label for='nome'>Nome</label>"
+						+	        	"</div>"
+						+			"</div>"
+						+			"<div class='row'>"
+						+	        	"<div class='input-field col s12'>"
+						+	          		"<input id='login' name='login' type='text'>"
+						+	          		"<label for='descricao'>Login</label>"
+						+	        	"</div>"
+						+	      	"</div>"
+						+			"<div class='row'>"
+						+	        	"<div class='input-field col s12'>"
+						+	          		"<input id='senha' name='senha' type='password'>"
+						+	          		"<label for='descricao'>Senha</label>"
+						+	        	"</div>"
+						+	      	"</div>"
+						+			"<div class='row'>"
+						+	        	"<div class='input-field col s12'>"
+						+	          		"<input id='senha-confirm' name='senha-confirm' type='password'>"
+						+	          		"<label for='descricao'>Repita senha</label>"
+						+	        	"</div>"
+						+	      	"</div>");
+		          	%>
+					
+						  
+								  <button class="btn waves-effect waves-light" type="submit" name="action">Adicionar
+		    							<i class="material-icons right">send</i>
+		  						  </button>
+	  						  
+							</form>
+						</div>
+				    </div>
+			 	
+				    
+			    <div id="secretariaTab" class="col s12">
+			    	
+			    	    <% 				
+						out.println("<div class='row'>"
+						+		"<p>&nbsp;</p>"
+						+		"<form class='col s12' action='admitir_funcionario_action.jsp'>"
+						+			"<input name='cargo' type='hidden' value='secretaria'>"
+						+	    	"<div id='div-pai' class='row'>"
+						+	      		"<div class='input-field col s12'>"
+						+	        		"<input  id='nome' name='nome' type='text'>"
+						+	        		"<label for='nome'>Nome</label>"
+						+	        	"</div>"
+						+			"</div>"
+						+			"<div class='row'>"
+						+	        	"<div class='input-field col s12'>"
+						+	          		"<input id='login' name='login' type='text'>"
+						+	          		"<label for='descricao'>Login</label>"
+						+	        	"</div>"
+						+	      	"</div>"
+						+			"<div class='row'>"
+						+	        	"<div class='input-field col s12'>"
+						+	          		"<input id='senha' name='senha' type='password'>"
+						+	          		"<label for='descricao'>Senha</label>"
+						+	        	"</div>"
+						+	      	"</div>"
+						+			"<div class='row'>"
+						+	        	"<div class='input-field col s12'>"
+						+	          		"<input id='senha-confirm' name='senha-confirm' type='password'>"
+						+	          		"<label for='descricao'>Repita senha</label>"
+						+	        	"</div>"
+						+	      	"</div>");
+		          	%>
+					
+						  
+									  <button class="btn waves-effect waves-light" type="submit" name="action">Adicionar
+			    							<i class="material-icons right">send</i>
+			  						  </button>
+		  						  
+								</form>
+							</div>
+					    </div>
+			    	
+			    	</div><!-- tab -->
 		</div>
 		<!--  Scripts-->
 		
@@ -89,6 +199,7 @@
 			$(document).ready(function() {
 				console.log("READY");
 			    $('select').material_select();
+			    $('ul.tabs').tabs();
 			});
 			
 			function addCliente() {

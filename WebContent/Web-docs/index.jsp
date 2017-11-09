@@ -13,7 +13,7 @@
 	<body>
 		<div class="">
 			
-			<div class="parallax-container">
+			<div class="parallax-container" style="height: 300px;">
       			<div class="parallax"><img src="images/advocacia.jpeg"></div>
     		</div>
 		
@@ -64,7 +64,7 @@
 				</div>
 			</div>
 			
-			<div class="parallax-container">
+			<div class="parallax-container" style="height: 300px;">
     			<div class="parallax"><img src="images/advocacia.jpg"></div>
   			</div>
 			

@@ -148,7 +148,7 @@
 							+		"<a href='promover_funcionario.jsp' class='collection-item'>Promover funcionário</a>"
 							+		"<a href='rebaixar_funcionario.jsp' class='collection-item'>Rebaixar funcionário</a>"
 							+		"<a href='admitir_funcionario.jsp' class='collection-item'>Admitir funcionário</a>"
-							+		"<a href='#!' class='collection-item'>Demitir funcionário</a>"
+							+		"<a href='demitir_funcionario.jsp' class='collection-item'>Demitir funcionário</a>"
 							
 						  	+	"</div>"
 

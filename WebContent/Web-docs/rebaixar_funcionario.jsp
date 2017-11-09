@@ -22,10 +22,12 @@
 		      	<a href="menu.jsp" class="brand-logo">Escritorio de Advocacia</a>
 		      	<ul id="nav-mobile" class="right hide-on-med-and-down">
 		        	<%
-			    		//instanciando FuncionarioDAO e conectando no banco
-						AdvogadoDAO adao = new AdvogadoDAO();
-						adao.conexaoBD();
-		        	
+			    		//instanciando GerenteDAO e AdvogadoDAO e conectando no banco
+						GerenteDAO gdao = new GerenteDAO();
+			    		AdvogadoDAO adao = new AdvogadoDAO();
+						gdao.conexaoBD();
+			    		adao.conexaoBD();
+								        	
 						Advogado perfil = adao.consultaPorLogin((String) session.getAttribute("perfil_login"));
 						
 		        		out.println("<li>"+ perfil.getNome() +"</li>");
@@ -64,9 +66,11 @@
 								out.println("<li class='collection-item avatar'>"
 										+		"<span class='title'>"+ advogados[i].getNome() +"</span>"
 										+		"<p>" + advogados[i].getLogin()
-										+ 		"<br>"+ advogados[i].getMatricula() +"</p>"
-										+		"<a href='javascript:{}' onclick='passarebaixado(\""+ advogados[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>"
-										+	"</li>");
+										+ 		"<br>"+ advogados[i].getMatricula() +"</p>");
+										if (gdao.consultaPorLogin(advogados[i].getLogin()) != null) {
+											out.println("<a href='javascript:{}' onclick='passarebaixado(\""+ advogados[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>");
+										}
+										out.println("</li>");
 							}
 							out.println("</ul>"
 							+		"</span></div>"
@@ -82,9 +86,11 @@
 								out.println("<li class='collection-item avatar'>"
 										+		"<span class='title'>"+ motoboys[i].getNome() +"</span>"
 										+		"<p>" + motoboys[i].getLogin()  
-										+ 		"<br>"+ motoboys[i].getMatricula() +"</p>"
-										+		"<a href='javascript:{}' onclick='passarebaixado(\""+ motoboys[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>"
-										+	"</li>");
+										+ 		"<br>"+ motoboys[i].getMatricula() +"</p>");
+										if (gdao.consultaPorLogin(motoboys[i].getLogin()) != null) {							
+											out.println("<a href='javascript:{}' onclick='passarebaixado(\""+ motoboys[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>");
+										}
+										out.println("</li>");
 							}
 							out.println("</ul>"
 							+		"</span></div>"
@@ -101,9 +107,11 @@
 								out.println("<li class='collection-item avatar'>"
 										+		"<span class='title'>"+ secretarias[i].getNome() +"</span>"
 										+		"<p>" + secretarias[i].getLogin()
-										+		"<br>"+ secretarias[i].getMatricula() +"</p>"
-										+		"<a href='javascript:{}' onclick='passarebaixado(\""+ secretarias[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>"
-										+	"</li>");
+										+		"<br>"+ secretarias[i].getMatricula() +"</p>");
+										if (gdao.consultaPorLogin(secretarias[i].getLogin()) != null) {
+											out.println("<a href='javascript:{}' onclick='passarebaixado(\""+ secretarias[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>");
+										}
+										out.println("</li>");
 							}
 							out.println("</ul>"
 							+		"</span></div>"

@@ -17,7 +17,7 @@ public class ClienteDAO {
 	try {
 	    Class.forName("com.mysql.jdbc.Driver");
 	    String url = "jdbc:mysql://localhost:3306/escritorio";
-	    con = DriverManager.getConnection(url, "escritorio-user", "fak3TwokGoi");
+	    con = DriverManager.getConnection(url, "escritorio-user", "ejEvkoid3");
 	    
 	    con.setAutoCommit(false);
 	    

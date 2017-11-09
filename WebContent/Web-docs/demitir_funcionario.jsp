@@ -22,12 +22,12 @@
 		      	<a href="menu.jsp" class="brand-logo">Escritorio de Advocacia</a>
 		      	<ul id="nav-mobile" class="right hide-on-med-and-down">
 		        	<%
-			    		//instanciando AdvogadoDAO e GerenteDAO e conectando no banco
-						AdvogadoDAO adao = new AdvogadoDAO();
-		        		GerenteDAO gdao = new GerenteDAO();
-		        		gdao.conexaoBD();
-						adao.conexaoBD();
-		        	
+			    		//instanciando GerenteDAO e AdvogadoDAO e conectando no banco
+						GerenteDAO gdao = new GerenteDAO();
+			    		AdvogadoDAO adao = new AdvogadoDAO();
+						gdao.conexaoBD();
+			    		adao.conexaoBD();
+								        	
 						Advogado perfil = adao.consultaPorLogin((String) session.getAttribute("perfil_login"));
 						
 		        		out.println("<li>"+ perfil.getNome() +"</li>");
@@ -46,10 +46,10 @@
 		
 		<div class="container">
 			<p>&nbsp;</p>
-			<h4 class="teal-text lighten-1">Promover funcionário</h4>
+			<h4 class="teal-text lighten-1">demitir funcionário</h4>
 			
-			<form id="promover-funcionario" action="promover_funcionario_action.jsp"> 
-				<input id="funcionario-promovido" name="funcionario-promovido" type="hidden">
+			<form id="demitir-funcionario" action="demitir_funcionario_action.jsp"> 
+				<input id="funcionario-demitido" name="funcionario-demitido" type="hidden">
 			
 				<!-- COLLAPSIBLE -->
 				<ul class="collapsible" data-collapsible="expandable">
@@ -67,9 +67,8 @@
 										+		"<span class='title'>"+ advogados[i].getNome() +"</span>"
 										+		"<p>" + advogados[i].getLogin()
 										+ 		"<br>"+ advogados[i].getMatricula() +"</p>");
-										//testando se é gerente e escondendo opção de promoção se for
-										if (gdao.consultaPorLogin(advogados[i].getLogin()) == null) {
-											out.println("<a href='javascript:{}' onclick='passaPromovido(\""+ advogados[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>group_add</i></a>");
+										if (gdao.consultaPorLogin(advogados[i].getLogin()) != null) {
+											out.println("<a href='javascript:{}' onclick='passademitido(\""+ advogados[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>");
 										}
 										out.println("</li>");
 							}
@@ -88,11 +87,9 @@
 										+		"<span class='title'>"+ motoboys[i].getNome() +"</span>"
 										+		"<p>" + motoboys[i].getLogin()  
 										+ 		"<br>"+ motoboys[i].getMatricula() +"</p>");
-										
-										if (gdao.consultaPorLogin(motoboys[i].getLogin()) == null) {
-											out.println("<a href='javascript:{}' onclick='passaPromovido(\""+ motoboys[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>group_add</i></a>");
+										if (gdao.consultaPorLogin(motoboys[i].getLogin()) != null) {							
+											out.println("<a href='javascript:{}' onclick='passademitido(\""+ motoboys[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>");
 										}
-										
 										out.println("</li>");
 							}
 							out.println("</ul>"
@@ -111,9 +108,8 @@
 										+		"<span class='title'>"+ secretarias[i].getNome() +"</span>"
 										+		"<p>" + secretarias[i].getLogin()
 										+		"<br>"+ secretarias[i].getMatricula() +"</p>");
-										
-										if (gdao.consultaPorLogin(secretarias[i].getLogin()) == null) {
-											out.println("<a href='javascript:{}' onclick='passaPromovido(\""+ secretarias[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>group_add</i></a>");
+										if (gdao.consultaPorLogin(secretarias[i].getLogin()) != null) {
+											out.println("<a href='javascript:{}' onclick='passademitido(\""+ secretarias[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>");
 										}
 										out.println("</li>");
 							}
@@ -128,12 +124,12 @@
 		</div>	
 		<!--  Scripts-->
 		<script>
-			function passaPromovido(loginpromovido){
-				Materialize.toast('Funcionario promovido', 4000);
-				var input = document.getElementById("funcionario-promovido");
-				var form = document.getElementById("promover-funcionario");
+			function passademitido(logindemitido){
+				Materialize.toast('Funcionario demitido', 4000);
+				var input = document.getElementById("funcionario-demitido");
+				var form = document.getElementById("demitir-funcionario");
 				
-				input.value = loginpromovido;
+				input.value = logindemitido;
 				form.submit();
 			}
 		</script>
