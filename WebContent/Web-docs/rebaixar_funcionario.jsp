@@ -44,10 +44,10 @@
 		
 		<div class="container">
 			<p>&nbsp;</p>
-			<h4 class="teal-text lighten-1">Promover funcionário</h4>
+			<h4 class="teal-text lighten-1">Rebaixar funcionário</h4>
 			
-			<form id="promover-funcionario" action="promover_funcionario_action.jsp"> 
-				<input id="funcionario-promovido" name="funcionario-promovido" type="hidden">
+			<form id="rebaixar-funcionario" action="rebaixar_funcionario_action.jsp"> 
+				<input id="funcionario-rebaixado" name="funcionario-rebaixado" type="hidden">
 			
 				<!-- COLLAPSIBLE -->
 				<ul class="collapsible" data-collapsible="expandable">
@@ -65,7 +65,7 @@
 										+		"<span class='title'>"+ advogados[i].getNome() +"</span>"
 										+		"<p>" + advogados[i].getLogin()
 										+ 		"<br>"+ advogados[i].getMatricula() +"</p>"
-										+		"<a href='javascript:{}' onclick='passaPromovido(\""+ advogados[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>group_add</i></a>"
+										+		"<a href='javascript:{}' onclick='passarebaixado(\""+ advogados[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>"
 										+	"</li>");
 							}
 							out.println("</ul>"
@@ -83,7 +83,7 @@
 										+		"<span class='title'>"+ motoboys[i].getNome() +"</span>"
 										+		"<p>" + motoboys[i].getLogin()  
 										+ 		"<br>"+ motoboys[i].getMatricula() +"</p>"
-										+		"<a href='javascript:{}' onclick='passaPromovido(\""+ motoboys[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>group_add</i></a>"
+										+		"<a href='javascript:{}' onclick='passarebaixado(\""+ motoboys[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>"
 										+	"</li>");
 							}
 							out.println("</ul>"
@@ -102,7 +102,7 @@
 										+		"<span class='title'>"+ secretarias[i].getNome() +"</span>"
 										+		"<p>" + secretarias[i].getLogin()
 										+		"<br>"+ secretarias[i].getMatricula() +"</p>"
-										+		"<a href='javascript:{}' onclick='passaPromovido(\""+ secretarias[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>group_add</i></a>"
+										+		"<a href='javascript:{}' onclick='passarebaixado(\""+ secretarias[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>"
 										+	"</li>");
 							}
 							out.println("</ul>"
@@ -116,12 +116,12 @@
 		</div>	
 		<!--  Scripts-->
 		<script>
-			function passaPromovido(loginpromovido){
-				Materialize.toast('Funcionario promovido', 4000);
-				var input = document.getElementById("funcionario-promovido");
-				var form = document.getElementById("promover-funcionario");
+			function passarebaixado(loginrebaixado){
+				Materialize.toast('Funcionario rebaixado', 4000);
+				var input = document.getElementById("funcionario-rebaixado");
+				var form = document.getElementById("rebaixar-funcionario");
 				
-				input.value = loginpromovido;
+				input.value = loginrebaixado;
 				form.submit();
 			}
 		</script>

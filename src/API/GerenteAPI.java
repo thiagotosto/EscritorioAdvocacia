@@ -116,14 +116,6 @@ public class GerenteAPI {
 		//buscando usuario no banco
 		Gerente usuario = gdao.consultaPorLogin(usuario_excluido);
 		
-		/*
-		if (usuario != null) {
-			//excluindo usuario
-			gdao.despromove(usuario);
-		} else {
-			System.out.println("Esse funcionário não é gerente!");
-		}*/
-		
 		try {
 			//excluindo usuario
 			gdao.despromove(usuario);

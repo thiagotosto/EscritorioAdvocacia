@@ -19,7 +19,7 @@
 		
 			 <div class="section white container">
     			<div class="row">
-					<h1 class="teal-text lighten-1" align="center">Escritorio de Advocacia</h1>
+					<h1 class="teal-text lighten-1" align="center">Escritório de Advocacia</h1>
 					<p>&nbsp;</p>
 					<p>&nbsp;</p>
 			

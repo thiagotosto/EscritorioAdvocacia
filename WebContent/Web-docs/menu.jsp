@@ -12,7 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="../css/style.css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Escritorio de Advocacia</title>
+		<title>Escritório de Advocacia</title>
 	</head>
 	<body>
 		
@@ -20,7 +20,7 @@
 		<!-- barra de navegação -->
 		<nav class="teal lighten-1">
 		   	<div class="container nav-wrapper">
-		      	<a href="menu.jsp" class="brand-logo">Escritorio de Advocacia</a>
+		      	<a href="menu.jsp" class="brand-logo">Escritório de Advocacia</a>
 		      	<ul id="nav-mobile" class="right hide-on-med-and-down">
 		        	<%
 			    		//instanciando FuncionarioDAO e conectando no banco
@@ -146,8 +146,8 @@
 					out.println("<div class='collapsible-body'><span>"
 							+  	"<div class='collection'>"
 							+		"<a href='promover_funcionario.jsp' class='collection-item'>Promover funcionário</a>"
-							+		"<a href='#!' class='collection-item'>Rebaixar funcionário</a>"
-							+		"<a href='#!' class='collection-item'>Admitir funcionário</a>"
+							+		"<a href='rebaixar_funcionario.jsp' class='collection-item'>Rebaixar funcionário</a>"
+							+		"<a href='admitir_funcionario.jsp' class='collection-item'>Admitir funcionário</a>"
 							+		"<a href='#!' class='collection-item'>Demitir funcionário</a>"
 							
 						  	+	"</div>"
@@ -155,21 +155,6 @@
 							
 							+	"</span></div></li>");
 				} else if (opcoes_perfil[i] == "Ver gerentes") {
-					/*
-					//trazendo todos os gerentes
-					Gerente[] gerentes = GerenteAPI.mostraTodosGerentes();
-					
-					out.println("<li><div class='collapsible-header'><i class='material-icons'>assignment_ind</i>" + opcoes_perfil[i] + "</div>");
-					
-					out.println("<div class='collapsible-body'><span>");
-					out.println("<div class='collection'>");
-					
-					for (i = 0; i < gerentes.length; i++) {
-						out.println("<li class='collection-item'>"+ gerentes[i].getNome() +"</li>");
-					}
-					
-					out.println("</div>");
-					out.println("</span></div></li>");*/
 					
 					//trazendo todos os gerentes
 					Gerente[] gerentes= GerenteAPI.mostraTodosGerentes();
