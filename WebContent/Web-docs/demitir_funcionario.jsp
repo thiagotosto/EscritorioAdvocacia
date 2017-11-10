@@ -46,7 +46,7 @@
 		
 		<div class="container">
 			<p>&nbsp;</p>
-			<h4 class="teal-text lighten-1">demitir funcionário</h4>
+			<h4 class="teal-text lighten-1">Demitir funcionário</h4>
 			
 			<form id="demitir-funcionario" action="demitir_funcionario_action.jsp"> 
 				<input id="funcionario-demitido" name="funcionario-demitido" type="hidden">
@@ -67,9 +67,7 @@
 										+		"<span class='title'>"+ advogados[i].getNome() +"</span>"
 										+		"<p>" + advogados[i].getLogin()
 										+ 		"<br>"+ advogados[i].getMatricula() +"</p>");
-										if (gdao.consultaPorLogin(advogados[i].getLogin()) != null) {
-											out.println("<a href='javascript:{}' onclick='passademitido(\""+ advogados[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>");
-										}
+										out.println("<a href='javascript:{}' onclick='passademitido(\""+ advogados[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>");
 										out.println("</li>");
 							}
 							out.println("</ul>"
@@ -87,9 +85,7 @@
 										+		"<span class='title'>"+ motoboys[i].getNome() +"</span>"
 										+		"<p>" + motoboys[i].getLogin()  
 										+ 		"<br>"+ motoboys[i].getMatricula() +"</p>");
-										if (gdao.consultaPorLogin(motoboys[i].getLogin()) != null) {							
-											out.println("<a href='javascript:{}' onclick='passademitido(\""+ motoboys[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>");
-										}
+										out.println("<a href='javascript:{}' onclick='passademitido(\""+ motoboys[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>");
 										out.println("</li>");
 							}
 							out.println("</ul>"
@@ -108,9 +104,7 @@
 										+		"<span class='title'>"+ secretarias[i].getNome() +"</span>"
 										+		"<p>" + secretarias[i].getLogin()
 										+		"<br>"+ secretarias[i].getMatricula() +"</p>");
-										if (gdao.consultaPorLogin(secretarias[i].getLogin()) != null) {
-											out.println("<a href='javascript:{}' onclick='passademitido(\""+ secretarias[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>");
-										}
+										out.println("<a href='javascript:{}' onclick='passademitido(\""+ secretarias[i].getLogin() +"\");' class='secondary-content'><i class='material-icons'>highlight_off</i></a>");
 										out.println("</li>");
 							}
 							out.println("</ul>"

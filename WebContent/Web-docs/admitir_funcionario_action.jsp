@@ -53,7 +53,8 @@
 				advogado.setLogin(request.getParameter("login"));
 				advogado.setSenha(request.getParameter("senha"));
 				advogado.setOab(request.getParameter("oab"));
-							
+				advogado.setMatricula(Utils.geraMatricula());
+				
 				//persistindo no banco
 				AdvogadoAPI.admitirAdvogado(advogado);
 				
@@ -67,6 +68,7 @@
 				motoboy.setNome(request.getParameter("nome"));
 				motoboy.setLogin(request.getParameter("login"));
 				motoboy.setSenha(request.getParameter("senha"));
+				motoboy.setMatricula(Utils.geraMatricula());
 				
 				//persisitindo no banco
 				MotoBoyAPI.admitirMotoBoy(motoboy);
@@ -80,6 +82,7 @@
 				secretaria.setNome(request.getParameter("nome"));
 				secretaria.setLogin(request.getParameter("login"));
 				secretaria.setSenha(request.getParameter("senha"));
+				secretaria.setMatricula(Utils.geraMatricula());
 				
 				//persisitindo no banco
 				SecretariaAPI.admitirSecretaria(secretaria);

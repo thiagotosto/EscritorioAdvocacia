@@ -105,6 +105,28 @@ public class FuncionarioDAO {
 	   return p;   
 	}
 
+	public long consultaUltimaMatricula() {
+		long matricula = 0;
+		
+		try {
+			String query = "SELECT MAX(matricula) FROM funcionario";
+			ResultSet rs = stmt.executeQuery(query);
+			con.commit();
+			
+			
+			
+			if (rs.next()) {
+				matricula = Long.parseLong(rs.getString("MAX(matricula)")); 
+			}
+			
+			return matricula;
+			
+		} catch (SQLException e) {
+			System.err.print("Erro no SQL: " + e.getMessage());
+		}
+		return matricula;
+	}
+	
 	public int excluir (Funcionario p)
 	{
 		int resultado = -1;

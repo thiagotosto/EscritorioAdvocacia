@@ -1,5 +1,11 @@
 package utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import DAO.FuncionarioDAO;
+
 public class Utils {
 
   public static String[] joinArray(String[]... array){
@@ -33,6 +39,24 @@ public class Utils {
     }
     
     return result;
+  }
+  
+  public static String geraMatricula(){
+	//instanciando FuncionarioDAO e conectando no banco
+	FuncionarioDAO fdao = new FuncionarioDAO();
+	fdao.conexaoBD();
+	
+	String ultimaMatricula = Long.toString(fdao.consultaUltimaMatricula());
+	System.out.println(ultimaMatricula);
+	int ultimoNumero = Integer.parseInt(ultimaMatricula.substring(ultimaMatricula.length() - 3, ultimaMatricula.length()));
+	
+	//criando data atual
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	Date date = new Date();
+		
+	long matricula = Long.parseLong(dateFormat.format(date).replaceAll("-", "")) * 1000 + ultimoNumero + 1;
+	
+	return Long.toString(matricula);
   }
 }
 

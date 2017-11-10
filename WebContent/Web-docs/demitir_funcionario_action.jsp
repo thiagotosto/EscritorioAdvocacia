@@ -46,7 +46,7 @@
 			
 			try {//
 				//promovendo a gerente
-				String retorno = GerenteAPI.despromoverGerente(funcionarioLogin);
+				GerenteAPI.demitir(funcionarioLogin);
 			} catch (Exception e) {
 				out.println("<script>alert('erro!!!');</script>");
 			}
