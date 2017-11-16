@@ -3,7 +3,9 @@ package modelo;
 
 public class Tarefa {
 	private int id;
+	private String nome;
 	private Funcionario owner;
+	private Funcionario criador;
 	private String descricao;
 	private String exprData;
 	private String expdData;
@@ -17,12 +19,28 @@ public class Tarefa {
 		return this.id;
 	}
 	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	public String getNome() {
+		return this.nome;
+	}
+	
 	public void setOwner(Funcionario owner) {
 		this.owner = owner;
 	}
 	
 	public Funcionario getOwner() {
 		return this.owner;
+	}
+	
+	public void setCriador(Funcionario criador) {
+		this.criador = criador;
+	}
+	
+	public Funcionario getCriador() {
+		return this.criador;
 	}
 	
 	public void setDescricao(String descricao) {

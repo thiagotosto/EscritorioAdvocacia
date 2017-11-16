@@ -116,7 +116,7 @@
 					out.println("<div class='collapsible-body'><span>"
 					+  	"<div class='collection'>"
 			        +		"<a href='consultar_tarefa.jsp' class='collection-item'>Consultar tarefa</a>"
-			        +		"<a href='#!' class='collection-item'>Criar tarefa</a>"
+			        +		"<a href='criar_tarefa.jsp' class='collection-item'>Criar tarefa</a>"
 			      	+	"</div>"
 
 					+ "</span></div></li>");

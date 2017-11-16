@@ -44,7 +44,9 @@ public class TarefaDAO {
 	   	    while (rs.next()) {
 	   	      t[i] = new Tarefa();	
 	          t[i].setId(rs.getInt("idtarefa"));
+	          t[i].setNome(rs.getString("nome"));
 	          t[i].setOwner(f);
+	          t[i].setCriador(f);
 	          t[i].setDescricao(rs.getString("descricao"));
 	          t[i].setExpdData(rs.getString("dataExpd"));
 	          t[i].setExprData(rs.getString("dataExpr"));
@@ -71,8 +73,10 @@ public class TarefaDAO {
 	   	    {
 	   	      t = new Tarefa();	
 	          t.setId(rs.getInt("idtarefa"));     // Pega o primeiro campo do tipo Int
+	          t.setNome(rs.getString("nome"));
 	          t.setDescricao(rs.getString("descricao"));// Pega o segundo campo do tipo String
 	          t.setOwner(fdao.consultaPorId(rs.getInt("idfuncionario")));
+	          t.setCriador(fdao.consultaPorId(rs.getInt("idcriador")));
 	          t.setExpdData(rs.getString("dataExpd"));
 	          t.setExprData(rs.getString("dataExpr"));
 	        }
@@ -131,7 +135,7 @@ public class TarefaDAO {
 		conexaoBD ();
 		 try {
 			// Monta a string sql
-			String sql = "insert into tarefa (idfuncionario,descricao,dataExpr, dataExpd) values(?,?,?,?)";
+			String sql = "insert into tarefa (idfuncionario,descricao,dataExpr,dataExpd,idcriador,nome) values(?,?,?,?,?,?)";
 		
 			// Passa a string para o PreparedStatement
 			pstm = con.prepareStatement(sql);
@@ -141,6 +145,8 @@ public class TarefaDAO {
 			pstm.setString(2, tarefa.getDescricao());
 			pstm.setString(3, tarefa.getExprData());
 			pstm.setString(4, tarefa.getExpdData());
+			pstm.setInt(5, tarefa.getCriador().getId());
+			pstm.setString(6, tarefa.getNome());
 			
 			// Executa
 			pstm.execute();
@@ -161,7 +167,7 @@ public class TarefaDAO {
 		conexaoBD ();
 		 try {
 			// Monta a string sql
-			String sql = "insert into tarefa (idfuncionario,descricao,dataExpr, dataExpd) values(?,?,?,?)";
+			String sql = "insert into tarefa (idfuncionario,descricao,dataExpr,dataExpd,idcriador,nome) values(?,?,?,?,?,?)";
 		
 			// Passa a string para o PreparedStatement
 			pstm = con.prepareStatement(sql);
@@ -171,6 +177,8 @@ public class TarefaDAO {
 			pstm.setString(2, tarefa.getDescricao());
 			pstm.setString(3, tarefa.getExprData());
 			pstm.setString(4, tarefa.getExpdData());
+			pstm.setInt(5, tarefa.getCriador().getId());
+			pstm.setString(6, tarefa.getNome());
 			
 			// Executa
 			pstm.execute();
@@ -193,7 +201,7 @@ public class TarefaDAO {
 		
 		try {
 			// Monta a string sql
-			String sql = "update tarefa set descricao = ?, dataExpr = ? where idtarefa = ?";
+			String sql = "update tarefa set descricao = ?, dataExpr = ?, nome = ? where idtarefa = ?";
 		
 			// Passa a string para o PreparedStatement
 			pstm = con.prepareStatement(sql);
@@ -201,7 +209,8 @@ public class TarefaDAO {
 			// Coloca os verdadeiros valores no lugar dos ?
 			pstm.setString(1, tarefa.getDescricao());
 			pstm.setString(2, tarefa.getExprData());
-			pstm.setInt(3, tarefa.getId());	
+			pstm.setString(3, tarefa.getNome());
+			pstm.setInt(4, tarefa.getId());	
 			
 			// Executa
 			pstm.execute();
