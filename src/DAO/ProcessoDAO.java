@@ -1,7 +1,9 @@
 package DAO;
 
 import java.sql.*;
+
 import javax.swing.*;
+
 import modelo.Processo;
 import modelo.Cliente;
 import modelo.Advogado;
@@ -16,6 +18,7 @@ public class ProcessoDAO {
 	try {
 	    Class.forName("com.mysql.jdbc.Driver");
 	    String url = "jdbc:mysql://localhost:3306/escritorio";
+	    //String url = "jdbc:mysql://localhost:3306/escritorio?useUnicode=true&characterEncoding=utf-8";
 	    con = DriverManager.getConnection(url, "escritorio-user", "ejEvkoid3");
 	    
 	    con.setAutoCommit(false);

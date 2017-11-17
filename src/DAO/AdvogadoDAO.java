@@ -19,6 +19,7 @@ public class AdvogadoDAO {
 	try {
 	    Class.forName("com.mysql.jdbc.Driver");
 	    String url = "jdbc:mysql://localhost:3306/escritorio";
+	    //String url = "jdbc:mysql://localhost:3306/escritorio?useUnicode=true&characterEncoding=utf-8";
 	    con = DriverManager.getConnection(url, "escritorio-user", "ejEvkoid3");
 	    
 	    con.setAutoCommit(false);

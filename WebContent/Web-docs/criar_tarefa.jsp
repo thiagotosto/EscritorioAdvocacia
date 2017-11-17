@@ -26,10 +26,10 @@
 		      	<ul id="nav-mobile" class="right hide-on-med-and-down">
 		        	<%
 			    		//instanciando FuncionarioDAO e conectando no banco
-						AdvogadoDAO adao = new AdvogadoDAO();
-						adao.conexaoBD();
+						FuncionarioDAO fdao = new FuncionarioDAO();
+						fdao.conexaoBD();
 		        	
-						Advogado perfil = adao.consultaPorLogin((String) session.getAttribute("perfil_login"));
+						Funcionario perfil = fdao.consultaPorLogin((String) session.getAttribute("perfil_login"));
 						
 		        		out.println("<li>"+ perfil.getNome() +"</li>");
 		        	%>
@@ -44,6 +44,7 @@
 			<% 			
 				out.println("<div class='row'>"
 				+		"<form class='col s12' action='criar_tarefa_action.jsp'>"
+				+			"<input name='criador' type='hidden' value='"+ perfil.getId() +"'>"
 				+	    	"<div id='div-pai' class='row'>"
 				+	      		"<div class='input-field col s12'>"
 				+	        		"<input  id='nome' name='nome' type='text'>"
@@ -58,12 +59,26 @@
 				+	      	"</div>"			
 				+			"<div class='row'>"
 				+	        	"<div class='input-field col s12'>"
-				+	          		"<textarea id='descricao' class='materialize-textarea'></textarea>"
+				+	          		"<textarea id='descricao' name='descricao' class='materialize-textarea'></textarea>"
 				+	          		"<label for='descricao'>Descrição</label>"
 				+	        	"</div>"
 				+	      	"</div>");
           	%>
-				
+          	
+					      	<div class="input-field col s12">
+							    <select id="select" name="select">
+							      <%				          		
+					          				
+					          		Funcionario[] funcionarios = fdao.consultaTodos();		
+							      	
+					          		for (int i = 0; i < funcionarios.length; i++) {
+					          			out.println("<option value='"+ funcionarios[i].getId() +"'>"+ funcionarios[i].getNome() +"</option>");
+					          		}
+							      %>
+							    </select>
+						      	<label>Responsável</label>
+						      </div>
+						      
 							  <button class="btn waves-effect waves-light" type="submit" name="action">Adicionar
 	    							<i class="material-icons right">send</i>
 	  						  </button>

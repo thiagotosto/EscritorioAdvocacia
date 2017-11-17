@@ -58,5 +58,22 @@ public class Utils {
 	
 	return Long.toString(matricula);
   }
+  
+  public static String parseDate(String date) {
+      String[] month = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+      
+      String[] date_splited = date.split("[ ,]");
+     
+      String result = null;
+      
+      
+      for (int i = 0; i < month.length; i++) {
+          if (date_splited[1].equals(month[i])) {
+              result = date_splited[3] + "-" + (i+1) + "-" + date_splited[0];
+          }
+      }
+      
+      return result;
+  }
 }
 

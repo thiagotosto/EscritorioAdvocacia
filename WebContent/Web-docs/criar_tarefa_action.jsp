@@ -5,11 +5,15 @@
 <%@ page import="modelo.*" %>
 <%@ page import="API.*" %>   
 <%@ page import="utils.*" %>   
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.text.DateFormat" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>	
+	<head>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-		<link rel="stylesheet" type="text/css" href="../materialize/css/style.css">
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Escritorio de Advocacia</title>
@@ -37,33 +41,33 @@
 		</nav>
 		
 		<div class="container">
-			<p>&nbsp;</p>
-			<h4 class="teal-text lighten-1">Tarefas</h4>
-			<% 
-				Tarefa[] tarefas = TarefaAPI.consultarTarefas(perfil);
+			<% 			
+				//intanciando TarefaDAO e conectando ao banco
+				TarefaDAO pdao = new TarefaDAO();
+				pdao.conexaoBD();
 				
-				out.println("<ul class='collapsible' data-collapsible='accordion'>");
-			
-				for (int i = 0; i < tarefas.length; i++) {
-					out.println("<li>"
-					+			  	"<div class='collapsible-header'><i class='material-icons'>event</i>"+ tarefas[i].getNome() +"</div>"							
-				    +  				"<div class='collapsible-body'><span><p>Data de Expiração: "+ tarefas[i].getExprData() +"</p><p>Data de Expedição: "+ tarefas[i].getExpdData() +"</p><br><p>"+ tarefas[i].getDescricao() +"</p><br><p>Criador: "+ tarefas[i].getCriador().getNome() +"</p></span></div>"
-				    +				"<div class='collapsible-body'><span>"
-				    +					"<form id='consumir-tarefa-"+ tarefas[i].getId() +"' action='consumir_tarefa.jsp'>"
-				    +						"<input id='tarefa' name='tarefa' type='hidden' value='"+ tarefas[i].getId() +"'>"
-				    +						"<a class='teal-text lighten-1' href='javascript:{}' onclick=\"document.getElementById('consumir-tarefa-"+ tarefas[i].getId() +"').submit();\"I><i class='material-icons'>done</i></a>"
-				    +					"</form>"
-				    +				"</span></div>"
-				    + 			"</li>");
-				}
-			
-				out.println("</ul>");
+				
+				//criando e populando novo Tarefa
+				Tarefa tarefa = new Tarefa();
+				tarefa.setNome(request.getParameter("nome")); //pegando funcionario pelo id passado Criador
+				tarefa.setCriador(fdao.consultaPorId(Integer.parseInt(request.getParameter("criador")))); //pegando funcionario pelo id passado Criador
+				tarefa.setOwner(fdao.consultaPorId(Integer.parseInt(request.getParameter("select")))); //pegando funcionario pelo id passado Owner
+				tarefa.setDescricao(request.getParameter("descricao"));
+				tarefa.setExprData(Utils.parseDate(request.getParameter("dataExpr"))); //data de expiração passada pelo usuario
+				
+				Date newDate = new Date();
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				
+				tarefa.setExpdData(dateFormat.format(newDate)); //data de expedição automática
+				
+				
+				TarefaAPI.cadastrarTarefa(tarefa);
+				
 			%>
-          
+			
+			out.println("<script>document.location.href='consultar_tarefa.jsp'</script>");
 		</div>	
 		<!--  Scripts-->
-		
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="../materialize/js/materialize.js"></script>
 	</body>
